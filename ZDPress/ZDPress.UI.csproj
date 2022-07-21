@@ -1,0 +1,327 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{BC92E63E-CB22-479E-960B-1BD9C6EC57D5}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ZDPress.UI</RootNamespace>
+    <AssemblyName>ZDPress.UI</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <NuGetPackageImportStamp>8b3019ce</NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net40-client\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\..\Windows\assembly\GAC_MSIL\Microsoft.Office.Interop.Excel\15.0.0.0__71e9bce111e9429c\Microsoft.Office.Interop.Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Windows\assembly\GAC_MSIL\Microsoft.ReportViewer.Common\11.0.0.0__89845dcd8080cc91\Microsoft.ReportViewer.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Windows\assembly\GAC_MSIL\Microsoft.ReportViewer.WinForms\11.0.0.0__89845dcd8080cc91\Microsoft.ReportViewer.WinForms.DLL</HintPath>
+    </Reference>
+    <Reference Include="OFFICE, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\..\Windows\assembly\GAC_MSIL\office\15.0.0.0__71e9bce111e9429c\OFFICE.DLL</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\AppContext.cs" />
+    <Compile Include="Common\AppControlInfo.cs" />
+    <Compile Include="Common\AppRole.cs" />
+    <Compile Include="Common\AppUser.cs" />
+    <Compile Include="Common\ControlBasedRightsManager.cs" />
+    <Compile Include="Common\Encriptor.cs" />
+    <Compile Include="Controls\PagingUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PagingUserControl.Designer.cs">
+      <DependentUpon>PagingUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ZDChart.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\ZDChart.Designer.cs">
+      <DependentUpon>ZDChart.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ZDGrid.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\ZDGrid.Designer.cs">
+      <DependentUpon>ZDGrid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ZDToggleButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\ZDToggleButton.Designer.cs">
+      <DependentUpon>ZDToggleButton.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ZDButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\ZDButton.Designer.cs">
+      <DependentUpon>ZDButton.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ZDLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\ZDLabel.Designer.cs">
+      <DependentUpon>ZDLabel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\AutoPrint.cs" />
+    <Compile Include="ViewModels\IdentifierPressureViewModel.cs" />
+    <Compile Include="Views\ChartForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\ChartForm.Designer.cs">
+      <DependentUpon>ChartForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\ChartFormViewModel.cs" />
+    <Compile Include="Views\IdentifierPressureForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\IdentifierPressureForm.Designer.cs">
+      <DependentUpon>IdentifierPressureForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LogInWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\LogInWindow.Designer.cs">
+      <DependentUpon>LogInWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\OperationSelectForm1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\OperationSelectForm1.Designer.cs">
+      <DependentUpon>OperationSelectForm1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FunctionSelectForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FunctionSelectForm.Designer.cs">
+      <DependentUpon>FunctionSelectForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\OperationSelectForm2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\OperationSelectForm2.Designer.cs">
+      <DependentUpon>OperationSelectForm2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\OperationSelectFormViewModel.cs" />
+    <Compile Include="Views\OperationListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\OperationsForm.Designer.cs">
+      <DependentUpon>OperationListForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ParametersForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\ParametersForm.Designer.cs">
+      <DependentUpon>ParametersForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\ParametersFormViewModel.cs" />
+    <Compile Include="Reports\ExcelReport.cs" />
+    <Compile Include="OpcLayer.cs" />
+    <Compile Include="Reports\ReportDto.cs" />
+    <Compile Include="Reports\ReportForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reports\ReportForm.Designer.cs">
+      <DependentUpon>ReportForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\ReportParameterAttribute.cs" />
+    <Compile Include="ShellForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ShellForm.Designer.cs">
+      <DependentUpon>ShellForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UIHelper.cs" />
+    <EmbeddedResource Include="Controls\PagingUserControl.resx">
+      <DependentUpon>PagingUserControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Report1.rdlc" />
+    <EmbeddedResource Include="Views\ChartForm.resx">
+      <DependentUpon>ChartForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\IdentifierPressureForm.resx">
+      <DependentUpon>IdentifierPressureForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\LogInWindow.resx">
+      <DependentUpon>LogInWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\OperationListForm.resx">
+      <DependentUpon>OperationListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\OperationSelectForm1.resx">
+      <DependentUpon>OperationSelectForm1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FunctionSelectForm.resx">
+      <DependentUpon>FunctionSelectForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\OperationSelectForm2.resx">
+      <DependentUpon>OperationSelectForm2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\ParametersForm.resx">
+      <DependentUpon>ParametersForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\ReportForm.resx">
+      <DependentUpon>ReportForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\ZDPress.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ShellForm.resx">
+      <DependentUpon>ShellForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Properties\DataSources\ZDPress.Core.PressOperation.datasource" />
+    <None Include="Properties\DataSources\ZDPress.Core.PressOperationData.datasource" />
+    <None Include="Properties\DataSources\ZDPress.Dal.Entities.PressOperationData.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ZDPress.Core\ZDPress.Opc.csproj">
+      <Project>{D53D2EC7-212C-468F-8D98-8C4DF5A10326}</Project>
+      <Name>ZDPress.Opc</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ZDPress.Dal\ZDPress.Dal.csproj">
+      <Project>{8E3121D8-A648-4AB9-9793-8E7CD3980821}</Project>
+      <Name>ZDPress.Dal</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Back.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Back3.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Delete-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\edit-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\fastforward.JPG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\fastreverse.JPG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Forward.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Forward1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Magnifier-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Magnifier-icon1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\report.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Search-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Rights\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
