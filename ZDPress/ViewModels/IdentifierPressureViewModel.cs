@@ -175,7 +175,7 @@ namespace ZDPress.UI.ViewModels
         private void UpdateParameters()
         {
             //OpcResponderSingleton.Instance.ViewItems(_paramNames);
-
+            // Test
             List<OpcParameter> parameters = OpcResponderSingleton.Instance.ProcessParameters(OpcResponderSingleton.Instance.Parameters);
 
             DispPress1 = parameters.Any(p => p.ParameterName == OpcConsts.DispPress1) ? Convert.ToInt32(parameters.First(p => p.ParameterName == OpcConsts.DispPress1).ParameterValue) : 0;
