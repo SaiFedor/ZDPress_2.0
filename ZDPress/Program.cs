@@ -10,7 +10,7 @@ namespace ZDPress.UI
     {
         public static readonly ILog Log = LogManager.GetLogger(typeof(Program));
 
-        public static AppContext PressContext { get; set; }
+        public static Common.AppContext PressContext { get; set; }
 
         public static OpcLayer OpcLayer { get; set; }
 
@@ -20,7 +20,7 @@ namespace ZDPress.UI
         [STAThread]
         public static void Main()
         {
-            PressContext = new AppContext
+            PressContext = new Common.AppContext
             {
                 CurrentUser = new AppUser
                 {
