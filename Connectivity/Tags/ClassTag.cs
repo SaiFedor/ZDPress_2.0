@@ -1,5 +1,4 @@
-﻿using ConnectionPLC.PLC;
-using System.Reflection;
+﻿using System.Reflection;
 
 namespace Connectivity;
 

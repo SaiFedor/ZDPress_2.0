@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Beckhoff.TwinCAT.Ads" Version="5.0.545" />
     <PackageReference Include="NModbus" Version="3.0.72" />
   </ItemGroup>
 

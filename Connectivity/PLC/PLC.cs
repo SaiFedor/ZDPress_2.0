@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace ConnectionPLC.PLC;
+namespace Connectivity;
 
 public abstract class PLC : INotifyPropertyChanged, IDisposable
 {

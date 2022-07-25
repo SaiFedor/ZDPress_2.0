@@ -1,5 +1,4 @@
-﻿using ConnectionPLC.PLC;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace Connectivity;

@@ -1,12 +1,11 @@
-﻿//using Connectivity.Crc;
-using Connectivity;
+﻿using Connectivity.Crc;
 using Microsoft.Win32.SafeHandles;
 using NModbus;
 using System.Diagnostics;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
 
-namespace ConnectionPLC.PLC;
+namespace Connectivity;
 
 /// <summary>
 /// Обеспечивает связь c ПЛК Modbus Tcp
@@ -80,7 +79,7 @@ public class PLC_ModbusTcp : PLC
     private void PollThread(object? uiContext, CancellationToken token)
     {
         SynchronizationContext context = uiContext as SynchronizationContext ??
-            throw new InvalidOperationException($"{nameof(PLC_ModbusTcp)}.{nameof(StartRead)}: SynchronizationContext.Current не может быть Null");
+            throw new InvalidOperationException($"{nameof(PLC_Ads)}.{nameof(StartRead)}: SynchronizationContext.Current не может быть Null");
         bool con = false;
         bool appStart = true;
         void readStatus(bool conNew)
@@ -142,14 +141,14 @@ public class PLC_ModbusTcp : PLC
 
                         for (int i = 0; i < 9; i++)
                         {
-                            crcReceived[i] = BitConverter.ToUInt16(memory.Slice(1000 + i * 2, 2).Span);
+                            crcReceived[i] = BitConverter.ToUInt16(memory.Slice(1000 + (i * 2), 2).Span);
                         }
                         int t = 0;
                         for (int i = 0; i < 1800; i += 200)
                         {
                             var bytes = memory.Slice(i, 200).Span.ToArray();
                             // Меняю местми байты, т.к. BitConverter.GetBytes(inputs[j]) переворачивает их
-                            for (int v = 0; v < bytes.Length; v += 2)
+                            for (int v = 0; v < bytes.Length; v+=2)
                             {
                                 (bytes[v + 1], bytes[v]) = (bytes[v], bytes[v + 1]);
                             }
@@ -203,7 +202,7 @@ public class PLC_ModbusTcp : PLC
 
     private void ReadStatusChanged(object? state)
     {
-        IsConnected = state is bool st && st;
+        IsConnected = (state is bool st) && st;
         ReadStatusChangedEvent?.Invoke(IsConnected);
     }
 
@@ -283,7 +282,7 @@ public class PLC_ModbusTcp : PLC
                 result = WriteUintFloatDt(value);
                 break;
             default:
-                throw new ArgumentException($"{GetType()}.{nameof(Write)} запись значения типа {value.GetType()} не реализована");
+                throw new ArgumentException($"{this.GetType()}.{nameof(Write)} запись значения типа {value.GetType()} не реализована");
         }
         return result;
 
@@ -318,8 +317,8 @@ public class PLC_ModbusTcp : PLC
             {
                 uint uintVal => BitConverter.GetBytes(uintVal),
                 float floatVal => BitConverter.GetBytes(floatVal),
-                DateTime dtVal => BitConverter.GetBytes((uint)dtVal.Subtract(new DateTime(1970, 1, 1)).TotalSeconds),
-                TimeSpan => BitConverter.GetBytes((uint)((TimeSpan)value).TotalMilliseconds),
+                DateTime dtVal => BitConverter.GetBytes((UInt32)(dtVal).Subtract(new DateTime(1970, 1, 1)).TotalSeconds),
+                TimeSpan => BitConverter.GetBytes((UInt32)((TimeSpan)value).TotalMilliseconds),
                 _ => throw new ArgumentException($"{nameof(WriteUintFloatDt)}:{nameof(value)}"),
             };
             ushort[] vals = new ushort[2];
@@ -416,7 +415,7 @@ internal static class Crc16
         for (int i = 0; i < bytes.Length; ++i)
         {
             byte index = (byte)(crc ^ bytes[i]);
-            crc = (ushort)(crc >> 8 ^ table[index]);
+            crc = (ushort)((crc >> 8) ^ table[index]);
         }
         return crc;
     }
@@ -433,7 +432,7 @@ internal static class Crc16
             {
                 if (((value ^ temp) & 0x0001) != 0)
                 {
-                    value = (ushort)(value >> 1 ^ polynomial);
+                    value = (ushort)((value >> 1) ^ polynomial);
                 }
                 else
                 {
