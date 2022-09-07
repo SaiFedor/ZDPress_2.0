@@ -7,6 +7,9 @@ namespace ZDPress.UI.Reports
 {
     public class ReportDto
     {
+        [ReportParameterAttribute("DateTimeCreate")]
+        public string DateTimeCreate { get; set; }
+
         [ReportParameterAttribute("ChartData")]
         public string ImageAsBase64 { get; set; }
 

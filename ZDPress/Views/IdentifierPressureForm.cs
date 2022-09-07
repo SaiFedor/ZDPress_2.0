@@ -45,7 +45,9 @@ namespace ZDPress.UI.Views
             zdLabel7.DataBindings.Add(new Binding("Text", ViewModel, "DispPress1", true, DataSourceUpdateMode.OnPropertyChanged));
             zdLabel6.DataBindings.Add(new Binding("Text", ViewModel, "DispPress2", true, DataSourceUpdateMode.OnPropertyChanged));
             zdLabel5.DataBindings.Add(new Binding("Text", ViewModel, "DispPress3", true, DataSourceUpdateMode.OnPropertyChanged));
-          
+
+            zdLabel8.DataBindings.Add(new Binding("BackColor", ViewModel, "PlcConnectState", true, DataSourceUpdateMode.OnPropertyChanged));
+
             label1.DataBindings.Add(new Binding("Text", ViewModel, "AlarmBP1", true, DataSourceUpdateMode.OnPropertyChanged));
 
             label2.DataBindings.Add(new Binding("Text", ViewModel, "AlarmBP2", true, DataSourceUpdateMode.OnPropertyChanged));

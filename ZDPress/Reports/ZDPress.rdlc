@@ -435,7 +435,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox15</rd:DefaultName>
-        <Top>11.9cm</Top>
+        <Top>12.3cm</Top>
         <Left>0.75356cm</Left>
         <Height>0.5cm</Height>
         <Width>2.07667cm</Width>
@@ -517,7 +517,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox17</rd:DefaultName>
-        <Top>11.9cm</Top>
+        <Top>12.3cm</Top>
         <Left>3.00662cm</Left>
         <Height>0.5cm</Height>
         <Width>1.94438cm</Width>
@@ -587,7 +587,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox19</rd:DefaultName>
-        <Top>11.9cm</Top>
+        <Top>12.3cm</Top>
         <Left>5.12739cm</Left>
         <Height>0.5cm</Height>
         <Width>1.8209cm</Width>
@@ -607,6 +607,17 @@
             <TextRuns>
               <TextRun>
                 <Value>Натяг, мм</Value>
+                <Style>
+                  <FontSize>8pt</FontSize>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value></Value>
                 <Style>
                   <FontSize>8pt</FontSize>
                 </Style>
@@ -646,7 +657,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox21</rd:DefaultName>
-        <Top>11.9cm</Top>
+        <Top>12.3cm</Top>
         <Left>7.0894cm</Left>
         <Height>0.5cm</Height>
         <Width>1.78562cm</Width>
@@ -716,7 +727,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox23</rd:DefaultName>
-        <Top>11.9cm</Top>
+        <Top>12.3cm</Top>
         <Left>9.05141cm</Left>
         <Height>0.5cm</Height>
         <Width>1.91793cm</Width>
@@ -735,7 +746,18 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>Усил. запрес.</Value>
+                <Value>Конечное усилие</Value>
+                <Style>
+                  <FontSize>8pt</FontSize>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>запрессовки</Value>
                 <Style>
                   <FontSize>8pt</FontSize>
                 </Style>
@@ -759,7 +781,7 @@
         <Top>11.22375cm</Top>
         <Left>11.27801cm</Left>
         <Height>0.83813cm</Height>
-        <Width>2.15605cm</Width>
+        <Width>2.55605cm</Width>
         <ZIndex>23</ZIndex>
         <Style>
           <Border>
@@ -786,10 +808,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox25</rd:DefaultName>
-        <Top>11.9cm</Top>
+        <Top>12.3cm</Top>
         <Left>11.27801cm</Left>
         <Height>0.5cm</Height>
-        <Width>2.12077cm</Width>
+        <Width>2.32077cm</Width>
         <ZIndex>24</ZIndex>
         <Style>
           <Border>
@@ -827,9 +849,9 @@
         </Paragraphs>
         <rd:DefaultName>Textbox14</rd:DefaultName>
         <Top>11.22375cm</Top>
-        <Left>13.71628cm</Left>
+        <Left>13.91628cm</Left>
         <Height>0.83813cm</Height>
-        <Width>1.64719cm</Width>
+        <Width>2.24719cm</Width>
         <ZIndex>25</ZIndex>
         <Style>
           <Border>
@@ -856,10 +878,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox15</rd:DefaultName>
-        <Top>11.9cm</Top>
-        <Left>13.57517cm</Left>
+        <Top>12.3cm</Top>
+        <Left>13.77517cm</Left>
         <Height>0.5cm</Height>
-        <Width>1.7883cm</Width>
+        <Width>1.6883cm</Width>
         <ZIndex>26</ZIndex>
         <Style>
           <Border>
@@ -875,7 +897,18 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>Длина прямых уч. мм</Value>
+                <Value>Длина прямых</Value>
+                <Style>
+                  <FontSize>8pt</FontSize>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>участков мм</Value>
                 <Style>
                   <FontSize>8pt</FontSize>
                 </Style>
@@ -885,10 +918,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox16</rd:DefaultName>
-        <Top>11.49146cm</Top>
-        <Left>15.69071cm</Left>
+        <Top>11.22375cm</Top>
+        <Left>15.89071cm</Left>
         <Height>0.53514cm</Height>
-        <Width>3.14855cm</Width>
+        <Width>2.04855cm</Width>
         <ZIndex>27</ZIndex>
         <Style>
           <Border>
@@ -915,10 +948,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox17</rd:DefaultName>
-        <Top>12.03111cm</Top>
-        <Left>15.59071cm</Left>
+        <Top>12.3cm</Top>
+        <Left>15.79071cm</Left>
         <Height>0.5cm</Height>
-        <Width>3.14855cm</Width>
+        <Width>2.0cm</Width>
         <ZIndex>28</ZIndex>
         <Style>
           <Border>
@@ -944,7 +977,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox13</rd:DefaultName>
-        <Top>12.41494cm</Top>
+        <Top>13.0cm</Top>
         <Left>0.43607cm</Left>
         <Height>0.6cm</Height>
         <Width>3.37312cm</Width>
@@ -960,7 +993,7 @@
         </Style>
       </Textbox>
       <Line Name="Line1">
-        <Top>12.98787cm</Top>
+        <Top>13.5cm</Top>
         <Left>3.91266cm</Left>
         <Height>0cm</Height>
         <Width>2.57938cm</Width>
@@ -988,7 +1021,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox30</rd:DefaultName>
-        <Top>12.41494cm</Top>
+        <Top>13.0cm</Top>
         <Left>7.14642cm</Left>
         <Height>0.6cm</Height>
         <Width>2.16013cm</Width>
@@ -1004,7 +1037,7 @@
         </Style>
       </Textbox>
       <Line Name="Line2">
-        <Top>12.98787cm</Top>
+        <Top>13.5cm</Top>
         <Left>9.45034cm</Left>
         <Height>0cm</Height>
         <Width>2.23542cm</Width>
@@ -1032,7 +1065,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox31</rd:DefaultName>
-        <Top>12.41494cm</Top>
+        <Top>13.0cm</Top>
         <Left>12.74974cm</Left>
         <Height>0.6cm</Height>
         <Width>2.76458cm</Width>
@@ -1048,7 +1081,7 @@
         </Style>
       </Textbox>
       <Line Name="Line3">
-        <Top>12.98787cm</Top>
+        <Top>13.5cm</Top>
         <Left>15.3779cm</Left>
         <Height>0cm</Height>
         <Width>2.42063cm</Width>
@@ -1059,8 +1092,39 @@
           </Border>
         </Style>
       </Line>
+      <Textbox Name="Textbox32">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=Parameters!DateTimeCreate.Value</Value>
+                <Style>
+                  <FontSize>8pt</FontSize>
+                  <TextDecoration>None</TextDecoration>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Center</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox2</rd:DefaultName>
+        <Top>0.32314cm</Top>
+        <Left>15.16623cm</Left>
+        <Height>0.6cm</Height>
+        <Width>4.06105cm</Width>
+        <ZIndex>35</ZIndex>
+        <Style>
+          <Border>
+            <Style>Solid</Style>
+          </Border>
+        </Style>
+      </Textbox>
     </ReportItems>
-    <Height>14.28494cm</Height>
+    <Height>13.78494cm</Height>
     <Style />
   </Body>
   <Width>20.56695cm</Width>
@@ -1171,6 +1235,12 @@
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
     <ReportParameter Name="DlinaPramUch">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="DateTimeCreate">
       <DataType>String</DataType>
       <Nullable>true</Nullable>
       <AllowBlank>true</AllowBlank>

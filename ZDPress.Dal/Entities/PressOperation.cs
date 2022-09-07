@@ -124,8 +124,7 @@ namespace ZDPress.Dal.Entities
         public int LengthLines { get; set; }
 
 
-        public int TotalRows { get; set; }
-
+        public int TotalRows { get; set; } 
 
         public BindingList<PressOperationData> PressOperationData;
 

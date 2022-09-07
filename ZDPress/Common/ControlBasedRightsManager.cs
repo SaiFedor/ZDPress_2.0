@@ -115,6 +115,8 @@ namespace ZDPress.UI.Common
 
                 IEnumerable<AppControlInfo> controls = appRole.AppControls.Where(appControl => string.Compare(appControl.ParentName, controlHolderName, StringComparison.CurrentCultureIgnoreCase) == 0);
 
+        
+
                 foreach (AppControlInfo appControl in controls)
                 {
                     if (appControl.IsHidden)

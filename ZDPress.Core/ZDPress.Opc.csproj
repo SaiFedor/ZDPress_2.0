@@ -23,6 +23,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -39,8 +40,18 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,26 +59,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BitParameters.cs" />
-    <Compile Include="OpcServerConnectResult.cs" />
+    <Compile Include="MainConstant.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="OpcResponder.cs" />
-    <Compile Include="OpcConsts.cs" />
-    <Compile Include="OpcParameter.cs" />
-    <Compile Include="OpcServerDescription.cs" />
-    <Compile Include="OpcServerManager.cs" />
     <Compile Include="OpcResponderSingleton.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SelServer.cs" />
-    <Compile Include="TreeNode.cs" />
+    <Compile Include="Tags\ControlBits.cs" />
+    <Compile Include="Tags\Tags.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OPCdotNETLib\OPCdotNETLib.csproj">
-      <Project>{b480f0b5-938e-43c4-9ba7-f3dc1ecfd8f6}</Project>
-      <Name>OPCdotNETLib</Name>
+    <ProjectReference Include="..\ConnectionPLC\ConnectionPLC.csproj">
+      <Project>{14321195-9738-4539-98CB-192AD61723D0}</Project>
+      <Name>ConnectionPLC</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

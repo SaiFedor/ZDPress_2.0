@@ -52,7 +52,7 @@ namespace ZDPress.UI.Views
 
             bool value = zdButton3.Checked;
 
-            OpcResponderSingleton.Instance.WriteBitToOpc(BitParameters.LeftWheel, value);
+            //OpcResponderSingleton.Instance.WriteBitToOpc(BitParameters.LeftWheel, value);
 
             Cursor.Current = Cursors.Default;
         }
@@ -65,7 +65,7 @@ namespace ZDPress.UI.Views
 
             bool value = zdToggleButton1.Checked;
 
-            OpcResponderSingleton.Instance.WriteBitToOpc(BitParameters.RightWheel, value);
+            //OpcResponderSingleton.Instance.WriteBitToOpc(BitParameters.RightWheel, value);
 
             Cursor.Current = Cursors.Default;
         }
@@ -125,7 +125,7 @@ namespace ZDPress.UI.Views
 
             bool value = zdToggleButton2.Checked;
             
-            OpcResponderSingleton.Instance.WriteBitToOpc(BitParameters.IzmerenieOsiStart, value);
+            //OpcResponderSingleton.Instance.WriteBitToOpc(BitParameters.IzmerenieOsiStart, value);
 
             Cursor.Current = Cursors.Default;
         }

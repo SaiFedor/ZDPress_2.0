@@ -13,8 +13,6 @@ namespace ZDPress.UI.Views
         public ParametersForm()
         {
             InitializeComponent();
-
-            ViewModel = new ParametersFormViewModel();
         }
 
         public ParametersFormViewModel ViewModel { get; set; }
@@ -25,32 +23,19 @@ namespace ZDPress.UI.Views
             base.OnShown(e);
 
             BindViewModel();
+            ViewModel.RunAutoUpdateParameters(2000);
         }
 
 
         private void BindViewModel()
         {
             maskedTextBox1.DataBindings.Add(new Binding("Text", ViewModel, "SpeedPress", true, DataSourceUpdateMode.OnPropertyChanged));
-            maskedTextBox2.DataBindings.Add(new Binding("Text", ViewModel, "WheelPosition", true, DataSourceUpdateMode.OnPropertyChanged));
+            maskedTextBox2.DataBindings.Add(new Binding("Text", ViewModel, "MaxPress", true, DataSourceUpdateMode.OnPropertyChanged));
             maskedTextBox3.DataBindings.Add(new Binding("Text", ViewModel, "Instrument", true, DataSourceUpdateMode.OnPropertyChanged));
             maskedTextBox4.DataBindings.Add(new Binding("Text", ViewModel, "EmphasisTravers", true, DataSourceUpdateMode.OnPropertyChanged));
             maskedTextBox5.DataBindings.Add(new Binding("Text", ViewModel, "EmphasisPlunger", true, DataSourceUpdateMode.OnPropertyChanged));
+            zdLabel13.DataBindings.Add(new Binding("BackColor", ViewModel, "PlcConnectState", true, DataSourceUpdateMode.OnPropertyChanged));
         }
-
-
-
-
-        protected override void OnActivated(EventArgs e)
-        {
-            base.OnActivated(e);
-
-            OpcResponderSingleton.Instance.ViewItems(ViewModel.GetAsParametesDictionary().Select(el => el.Key).ToList());
-
-            List<OpcParameter> parameters = OpcResponderSingleton.Instance.ProcessParameters(OpcResponderSingleton.Instance.Parameters);
-            
-            ViewModel.SetPropertiesByParameters(parameters);
-        }
-      
 
         private void OnBackClick()
         {
@@ -58,12 +43,10 @@ namespace ZDPress.UI.Views
             form.Hide();
         }
 
-    
-
         private void OnSaveParamsClick()
         {
-            Cursor.Current = Cursors.WaitCursor;            
-            OpcResponderSingleton.Instance.WriteToOpcList(ViewModel.GetAsParametesDictionary());
+            Cursor.Current = Cursors.WaitCursor;
+            ViewModel.SaveParameters();
             Cursor.Current = Cursors.Default;
         }
 

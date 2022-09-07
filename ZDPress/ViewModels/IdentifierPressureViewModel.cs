@@ -5,8 +5,10 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ZDPress.Opc;
+
 using System.Diagnostics;
+using ZDPress.Opc;
+using System.Drawing;
 
 namespace ZDPress.UI.ViewModels
 {
@@ -19,6 +21,23 @@ namespace ZDPress.UI.ViewModels
             if (PropertyChanged != null)
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        private System.Drawing.Color _plcConnectState;
+        public System.Drawing.Color PlcConnectState
+        {
+            get
+            {
+                return _plcConnectState;
+            }
+            set
+            {
+                if (_plcConnectState != value)
+                {
+                    _plcConnectState = value;
+                    OnPropertyChanged("PlcConnectState");
+                }
             }
         }
 
@@ -133,15 +152,7 @@ namespace ZDPress.UI.ViewModels
         private List<string> _paramNames;
         public IdentifierPressureViewModel() 
         {
-            _paramNames = new List<string>
-            {
-                //OpcConsts.DispPress1,
-                //OpcConsts.DispPress2,
-                //OpcConsts.DispPress3,
-                //OpcConsts.AlarmBP1
-                //,OpcConsts.Bits
-            };
-
+           
             _TimerForUpdate = new Timer();
             _TimerForUpdate.Tick += _TimerForUpdate_Tick;
         }
@@ -174,36 +185,22 @@ namespace ZDPress.UI.ViewModels
 
         private void UpdateParameters()
         {
-            //OpcResponderSingleton.Instance.ViewItems(_paramNames);
-            // Test DEV
-            List<OpcParameter> parameters = OpcResponderSingleton.Instance.ProcessParameters(OpcResponderSingleton.Instance.Parameters);
-
-            DispPress1 = parameters.Any(p => p.ParameterName == OpcConsts.DispPress1) ? Convert.ToInt32(parameters.First(p => p.ParameterName == OpcConsts.DispPress1).ParameterValue) : 0;
-
-            DispPress2 = parameters.Any(p => p.ParameterName == OpcConsts.DispPress2) ? Convert.ToInt32(parameters.First(p => p.ParameterName == OpcConsts.DispPress2).ParameterValue) : 0;
-
-            DispPress3 = parameters.Any(p => p.ParameterName == OpcConsts.DispPress3) ? Convert.ToInt32(parameters.First(p => p.ParameterName == OpcConsts.DispPress3).ParameterValue) : 0;
-
-            AlarmBP1 = parameters.Any(p => p.ParameterName == OpcConsts.AlarmBP1) && Convert.ToInt32(parameters.First(p => p.ParameterName == OpcConsts.AlarmBP1).ParameterValue) == 1 ? OpcConsts.AlarmText : string.Empty;
-
-            AlarmBP2 = parameters.Any(p => p.ParameterName == OpcConsts.AlarmBP2) && Convert.ToInt32(parameters.First(p => p.ParameterName == OpcConsts.AlarmBP2).ParameterValue) == 1 ? OpcConsts.AlarmText : string.Empty;
-
-            AlarmBP3 = parameters.Any(p => p.ParameterName == OpcConsts.AlarmBP3) && Convert.ToInt32(parameters.First(p => p.ParameterName == OpcConsts.AlarmBP3).ParameterValue) == 1 ? OpcConsts.AlarmText : string.Empty;
-            /*
-            int bits = parameters.Any(p => p.ParameterName == OpcConsts.Bits) ? Convert.ToInt32(parameters.First(p => p.ParameterName == OpcConsts.Bits).ParameterValue) : 0;
-
-
-            BitParameters bp = (BitParameters)bits;
-
             
-            AlarmBP1 = bp.HasFlag(BitParameters.AlarmDispPress1) ? "Ошибка" : string.Empty;
+            DispPress1 = Convert.ToInt32(Tags.DispPress1.Value);
 
+            DispPress2 = Convert.ToInt32(Tags.DispPress2.Value);
 
-            DispPress2Err = bp.HasFlag(BitParameters.AlarmDispPress2) ? "Ошибка" : string.Empty;
+            DispPress3 = Convert.ToInt32(Tags.DispPress3.Value);
 
+            if (MainConstant.plc.client != null ? MainConstant.plc.client.Connected : false)
+            {
+                PlcConnectState = Color.Green;
+            }
+            else
+            {
+                PlcConnectState = Color.Red;
+            }
 
-            DispPress3Err = bp.HasFlag(BitParameters.AlarmDispPress3) ? "Ошибка" : string.Empty;
-            */
 
             Trace.WriteLine(string.Format("DispPress1:{0}, DispPress2:{1}, DispPress3:{2}", DispPress1, DispPress2, DispPress3));
         }

@@ -31,25 +31,23 @@ namespace ZDPress.UI
 
             UiHelper.ShowForm(form, this);
         }
-        
-
 
         protected override void OnClosing(CancelEventArgs e)
         {
             OpcResponderSingleton.Instance.TimerStop();
+            MainConstant.CancellationTokenSourcePLCread.Cancel();
+            if (MainConstant.plc.client != null)
+            {                
+                MainConstant.plc.client.Dispose();                
+            }
+            if (MainConstant.plc != null)
+            {
+                MainConstant.plc.Dispose();
+            }
 
             Thread.Sleep(1000);
 
             base.OnClosing(e);
-        }
-
-
-
-        protected override void OnClosed(EventArgs e)
-        {
-            base.OnClosed(e);
-
-            OpcResponderSingleton.Instance.OpcServerClose();
         }
     }
 }

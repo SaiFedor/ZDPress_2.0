@@ -1,6 +1,8 @@
 ﻿using System.ComponentModel;
+using System.Drawing;
 using ZDPress.Dal;
 using ZDPress.Dal.Entities;
+using ZDPress.Opc;
 
 namespace ZDPress.UI.ViewModels
 {
@@ -13,6 +15,23 @@ namespace ZDPress.UI.ViewModels
             if (PropertyChanged != null)
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        private System.Drawing.Color _plcConnectState;
+        public System.Drawing.Color PlcConnectState
+        {
+            get
+            {
+                return _plcConnectState;
+            }
+            set
+            {
+                if (_plcConnectState != value)
+                {
+                    _plcConnectState = value;
+                    OnPropertyChanged("PlcConnectState");
+                }
             }
         }
 
@@ -64,6 +83,16 @@ namespace ZDPress.UI.ViewModels
             PressOperation.LengthLines = Dal.GetDlinaPramUch(operationId);
         }
 
-
+        public void UpdatePlcStatus()
+        {
+            if (MainConstant.plc.client != null ? MainConstant.plc.client.Connected : false)
+            {
+                PlcConnectState = Color.Green;
+            }
+            else
+            {
+                PlcConnectState = Color.Red;
+            }           
+        }
     }
 }

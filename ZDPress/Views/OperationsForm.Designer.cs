@@ -73,13 +73,14 @@ namespace ZDPress.UI.Views
             this.tableLayoutPanelMain.Controls.Add(this.zdButton2, 0, 0);
             this.tableLayoutPanelMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanelMain.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanelMain.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tableLayoutPanelMain.Name = "tableLayoutPanelMain";
             this.tableLayoutPanelMain.RowCount = 3;
             this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 11.03753F));
             this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 88.96247F));
-            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 44F));
-            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanelMain.Size = new System.Drawing.Size(967, 498);
+            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 54F));
+            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableLayoutPanelMain.Size = new System.Drawing.Size(1289, 613);
             this.tableLayoutPanelMain.TabIndex = 0;
             // 
             // pagingUserControl1
@@ -87,12 +88,12 @@ namespace ZDPress.UI.Views
             this.pagingUserControl1.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.tableLayoutPanelMain.SetColumnSpan(this.pagingUserControl1, 2);
             this.pagingUserControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pagingUserControl1.Location = new System.Drawing.Point(170, 455);
-            this.pagingUserControl1.Margin = new System.Windows.Forms.Padding(2);
+            this.pagingUserControl1.Location = new System.Drawing.Point(226, 560);
+            this.pagingUserControl1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pagingUserControl1.Name = "pagingUserControl1";
             this.pagingUserControl1.PageIndexOrSizeChangedEventHandler = null;
             this.pagingUserControl1.PageSizes = null;
-            this.pagingUserControl1.Size = new System.Drawing.Size(627, 31);
+            this.pagingUserControl1.Size = new System.Drawing.Size(836, 38);
             this.pagingUserControl1.TabIndex = 0;
             // 
             // zdGrid1
@@ -133,11 +134,13 @@ namespace ZDPress.UI.Views
             dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.zdGrid1.DefaultCellStyle = dataGridViewCellStyle4;
             this.zdGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.zdGrid1.Location = new System.Drawing.Point(3, 53);
+            this.zdGrid1.Location = new System.Drawing.Point(4, 65);
+            this.zdGrid1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.zdGrid1.MultiSelect = false;
             this.zdGrid1.Name = "zdGrid1";
             this.zdGrid1.ReadOnly = true;
             this.zdGrid1.RowHeadersVisible = false;
+            this.zdGrid1.RowHeadersWidth = 51;
             dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle5.Padding = new System.Windows.Forms.Padding(3);
             dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.BlanchedAlmond;
@@ -146,7 +149,7 @@ namespace ZDPress.UI.Views
             this.zdGrid1.RowsDefaultCellStyle = dataGridViewCellStyle5;
             this.zdGrid1.RowTemplate.DefaultCellStyle.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.zdGrid1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.zdGrid1.Size = new System.Drawing.Size(961, 397);
+            this.zdGrid1.Size = new System.Drawing.Size(1281, 489);
             this.zdGrid1.TabIndex = 1;
             // 
             // factoryNumberDataGridViewTextBoxColumn
@@ -154,6 +157,7 @@ namespace ZDPress.UI.Views
             this.factoryNumberDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.factoryNumberDataGridViewTextBoxColumn.DataPropertyName = "FactoryNumber";
             this.factoryNumberDataGridViewTextBoxColumn.HeaderText = "Номер завода";
+            this.factoryNumberDataGridViewTextBoxColumn.MinimumWidth = 6;
             this.factoryNumberDataGridViewTextBoxColumn.Name = "factoryNumberDataGridViewTextBoxColumn";
             this.factoryNumberDataGridViewTextBoxColumn.ReadOnly = true;
             // 
@@ -164,6 +168,7 @@ namespace ZDPress.UI.Views
             dataGridViewCellStyle2.Format = "dd.MM.yyyy HH.mm.ssss";
             this.operationStartDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle2;
             this.operationStartDataGridViewTextBoxColumn.HeaderText = "Время начала пресования";
+            this.operationStartDataGridViewTextBoxColumn.MinimumWidth = 6;
             this.operationStartDataGridViewTextBoxColumn.Name = "operationStartDataGridViewTextBoxColumn";
             this.operationStartDataGridViewTextBoxColumn.ReadOnly = true;
             // 
@@ -174,6 +179,7 @@ namespace ZDPress.UI.Views
             dataGridViewCellStyle3.Format = "dd.MM.yyyy HH.mm.ssss";
             this.operationStopDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle3;
             this.operationStopDataGridViewTextBoxColumn.HeaderText = "Время завершения пресования";
+            this.operationStopDataGridViewTextBoxColumn.MinimumWidth = 6;
             this.operationStopDataGridViewTextBoxColumn.Name = "operationStopDataGridViewTextBoxColumn";
             this.operationStopDataGridViewTextBoxColumn.ReadOnly = true;
             // 
@@ -182,6 +188,7 @@ namespace ZDPress.UI.Views
             this.wheelNumberDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.wheelNumberDataGridViewTextBoxColumn.DataPropertyName = "WheelNumber";
             this.wheelNumberDataGridViewTextBoxColumn.HeaderText = "Номер колеса";
+            this.wheelNumberDataGridViewTextBoxColumn.MinimumWidth = 6;
             this.wheelNumberDataGridViewTextBoxColumn.Name = "wheelNumberDataGridViewTextBoxColumn";
             this.wheelNumberDataGridViewTextBoxColumn.ReadOnly = true;
             // 
@@ -190,6 +197,7 @@ namespace ZDPress.UI.Views
             this.diagramNumberDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.diagramNumberDataGridViewTextBoxColumn.DataPropertyName = "DiagramNumber";
             this.diagramNumberDataGridViewTextBoxColumn.HeaderText = "Номер диаграммы";
+            this.diagramNumberDataGridViewTextBoxColumn.MinimumWidth = 6;
             this.diagramNumberDataGridViewTextBoxColumn.Name = "diagramNumberDataGridViewTextBoxColumn";
             this.diagramNumberDataGridViewTextBoxColumn.ReadOnly = true;
             // 
@@ -198,6 +206,7 @@ namespace ZDPress.UI.Views
             this.axisNumberDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.axisNumberDataGridViewTextBoxColumn.DataPropertyName = "AxisNumber";
             this.axisNumberDataGridViewTextBoxColumn.HeaderText = "Номер оси";
+            this.axisNumberDataGridViewTextBoxColumn.MinimumWidth = 6;
             this.axisNumberDataGridViewTextBoxColumn.Name = "axisNumberDataGridViewTextBoxColumn";
             this.axisNumberDataGridViewTextBoxColumn.ReadOnly = true;
             // 
@@ -206,6 +215,7 @@ namespace ZDPress.UI.Views
             this.wheelTypeDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.wheelTypeDataGridViewTextBoxColumn.DataPropertyName = "WheelType";
             this.wheelTypeDataGridViewTextBoxColumn.HeaderText = "Тип колесной пары";
+            this.wheelTypeDataGridViewTextBoxColumn.MinimumWidth = 6;
             this.wheelTypeDataGridViewTextBoxColumn.Name = "wheelTypeDataGridViewTextBoxColumn";
             this.wheelTypeDataGridViewTextBoxColumn.ReadOnly = true;
             // 
@@ -214,6 +224,7 @@ namespace ZDPress.UI.Views
             this.sideDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.sideDataGridViewTextBoxColumn.DataPropertyName = "Side";
             this.sideDataGridViewTextBoxColumn.HeaderText = "Сторона";
+            this.sideDataGridViewTextBoxColumn.MinimumWidth = 6;
             this.sideDataGridViewTextBoxColumn.Name = "sideDataGridViewTextBoxColumn";
             this.sideDataGridViewTextBoxColumn.ReadOnly = true;
             // 
@@ -222,6 +233,7 @@ namespace ZDPress.UI.Views
             this.dWheelDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.dWheelDataGridViewTextBoxColumn.DataPropertyName = "DWheel";
             this.dWheelDataGridViewTextBoxColumn.HeaderText = "Диаметр подст. части";
+            this.dWheelDataGridViewTextBoxColumn.MinimumWidth = 6;
             this.dWheelDataGridViewTextBoxColumn.Name = "dWheelDataGridViewTextBoxColumn";
             this.dWheelDataGridViewTextBoxColumn.ReadOnly = true;
             // 
@@ -230,6 +242,7 @@ namespace ZDPress.UI.Views
             this.dAxisDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.dAxisDataGridViewTextBoxColumn.DataPropertyName = "DAxis";
             this.dAxisDataGridViewTextBoxColumn.HeaderText = "Диаметр отв. cтупицы";
+            this.dAxisDataGridViewTextBoxColumn.MinimumWidth = 6;
             this.dAxisDataGridViewTextBoxColumn.Name = "dAxisDataGridViewTextBoxColumn";
             this.dAxisDataGridViewTextBoxColumn.ReadOnly = true;
             // 
@@ -238,6 +251,7 @@ namespace ZDPress.UI.Views
             this.lengthStupDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.lengthStupDataGridViewTextBoxColumn.DataPropertyName = "LengthStup";
             this.lengthStupDataGridViewTextBoxColumn.HeaderText = "Длина ступицы";
+            this.lengthStupDataGridViewTextBoxColumn.MinimumWidth = 6;
             this.lengthStupDataGridViewTextBoxColumn.Name = "lengthStupDataGridViewTextBoxColumn";
             this.lengthStupDataGridViewTextBoxColumn.ReadOnly = true;
             // 
@@ -246,6 +260,7 @@ namespace ZDPress.UI.Views
             this.natiagDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.natiagDataGridViewTextBoxColumn.DataPropertyName = "Natiag";
             this.natiagDataGridViewTextBoxColumn.HeaderText = "Натяг";
+            this.natiagDataGridViewTextBoxColumn.MinimumWidth = 6;
             this.natiagDataGridViewTextBoxColumn.Name = "natiagDataGridViewTextBoxColumn";
             this.natiagDataGridViewTextBoxColumn.ReadOnly = true;
             // 
@@ -254,6 +269,7 @@ namespace ZDPress.UI.Views
             this.lengthSopriazhDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.lengthSopriazhDataGridViewTextBoxColumn.DataPropertyName = "LengthSopriazh";
             this.lengthSopriazhDataGridViewTextBoxColumn.HeaderText = "Длина сопряжения";
+            this.lengthSopriazhDataGridViewTextBoxColumn.MinimumWidth = 6;
             this.lengthSopriazhDataGridViewTextBoxColumn.Name = "lengthSopriazhDataGridViewTextBoxColumn";
             this.lengthSopriazhDataGridViewTextBoxColumn.ReadOnly = true;
             // 
@@ -262,6 +278,7 @@ namespace ZDPress.UI.Views
             this.maxPowerDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.maxPowerDataGridViewTextBoxColumn.DataPropertyName = "MaxPower";
             this.maxPowerDataGridViewTextBoxColumn.HeaderText = "Max усилие запрессовки";
+            this.maxPowerDataGridViewTextBoxColumn.MinimumWidth = 6;
             this.maxPowerDataGridViewTextBoxColumn.Name = "maxPowerDataGridViewTextBoxColumn";
             this.maxPowerDataGridViewTextBoxColumn.ReadOnly = true;
             // 
@@ -270,6 +287,7 @@ namespace ZDPress.UI.Views
             this.lengthLinesDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.lengthLinesDataGridViewTextBoxColumn.DataPropertyName = "LengthLines";
             this.lengthLinesDataGridViewTextBoxColumn.HeaderText = "Длина прямых участков";
+            this.lengthLinesDataGridViewTextBoxColumn.MinimumWidth = 6;
             this.lengthLinesDataGridViewTextBoxColumn.Name = "lengthLinesDataGridViewTextBoxColumn";
             this.lengthLinesDataGridViewTextBoxColumn.ReadOnly = true;
             // 
@@ -283,10 +301,11 @@ namespace ZDPress.UI.Views
             this.zdButton1.BackColor = System.Drawing.Color.AliceBlue;
             this.zdButton1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.zdButton1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.zdButton1.Location = new System.Drawing.Point(486, 3);
-            this.zdButton1.MinimumSize = new System.Drawing.Size(0, 69);
+            this.zdButton1.Location = new System.Drawing.Point(648, 4);
+            this.zdButton1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.zdButton1.MinimumSize = new System.Drawing.Size(0, 85);
             this.zdButton1.Name = "zdButton1";
-            this.zdButton1.Size = new System.Drawing.Size(478, 69);
+            this.zdButton1.Size = new System.Drawing.Size(637, 85);
             this.zdButton1.TabIndex = 2;
             this.zdButton1.Text = "Назад";
             this.zdButton1.UseVisualStyleBackColor = false;
@@ -298,10 +317,11 @@ namespace ZDPress.UI.Views
             this.zdButton2.BackColor = System.Drawing.Color.AliceBlue;
             this.zdButton2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.zdButton2.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.zdButton2.Location = new System.Drawing.Point(3, 3);
-            this.zdButton2.MinimumSize = new System.Drawing.Size(0, 69);
+            this.zdButton2.Location = new System.Drawing.Point(4, 4);
+            this.zdButton2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.zdButton2.MinimumSize = new System.Drawing.Size(0, 85);
             this.zdButton2.Name = "zdButton2";
-            this.zdButton2.Size = new System.Drawing.Size(477, 69);
+            this.zdButton2.Size = new System.Drawing.Size(636, 85);
             this.zdButton2.TabIndex = 3;
             this.zdButton2.Text = "Открыть";
             this.zdButton2.UseVisualStyleBackColor = false;
@@ -309,10 +329,11 @@ namespace ZDPress.UI.Views
             // 
             // OperationListForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(967, 498);
+            this.ClientSize = new System.Drawing.Size(1289, 613);
             this.Controls.Add(this.tableLayoutPanelMain);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "OperationListForm";
             this.Text = "OperationsForm";
             this.tableLayoutPanelMain.ResumeLayout(false);

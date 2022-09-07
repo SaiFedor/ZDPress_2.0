@@ -19,7 +19,6 @@ namespace ZDPress.UI.Reports
             InitializeComponent();
         }
 
-
         public ReportDto ReportDto { get; set; }
 
         private void ReportForm_Load(object sender, EventArgs e)
@@ -28,7 +27,7 @@ namespace ZDPress.UI.Reports
 
             reportViewer1.LocalReport.ReportPath = rdlcPath;
 
-            //reportViewer1.PrinterSettings.DefaultPageSettings.PaperSize = System.Drawing.Printing.PaperSize()
+            //reportViewer1.PrinterSettings.DefaultPageSettings.PaperSize = System.Drawing.Printing.PaperSize.;
 
             SetReportParameters();
             

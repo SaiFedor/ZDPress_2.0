@@ -9,7 +9,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ZDPress.UI.Reports
@@ -42,6 +41,7 @@ namespace ZDPress.UI.Reports
         public AutoPrint(ReportDto reportDto)
         {
             ReportDto = reportDto;
+
         }
 
         // Create a local report for Report.rdlc, load the data,
@@ -143,12 +143,14 @@ namespace ZDPress.UI.Reports
 
             PrinterSettings printerSettings = new PrinterSettings
             {
-                PrinterName = printerName
+                PrinterName = printerName,
+                
             };
 
             printDoc.PrinterSettings = printerSettings;
-
             
+
+
                 if (printDoc.PrinterSettings.IsValid)
                 {
                     printDoc.PrintPage += PrintPage;
@@ -168,16 +170,23 @@ namespace ZDPress.UI.Reports
         private void PrintPage(object sender, PrintPageEventArgs ev)
         {
             Metafile pageImage = new Metafile(_mStreams[_mCurrentPageIndex]);
+            Configuration configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            int imgWidth = 0;
+            int.TryParse(configuration.AppSettings.Settings["PrintWidth"].Value, out imgWidth);
+            int imgHeight = 0;
+            int.TryParse(configuration.AppSettings.Settings["PrintHeight"].Value, out imgHeight);
+           
 
             // Adjust rectangular area with printer margins.
             Rectangle adjustedRect = new Rectangle(
                 ev.PageBounds.Left - (int)ev.PageSettings.HardMarginX,
                 ev.PageBounds.Top - (int)ev.PageSettings.HardMarginY,
-                ev.PageBounds.Width,
-                ev.PageBounds.Height);
+                imgWidth,
+                imgHeight);
 
             // Draw a white background for the report
             ev.Graphics.FillRectangle(Brushes.White, adjustedRect);
+           
 
             // Draw the report content
             ev.Graphics.DrawImage(pageImage, adjustedRect);
@@ -185,7 +194,7 @@ namespace ZDPress.UI.Reports
             // Prepare for the next page. Make sure we haven't hit the end.
             _mCurrentPageIndex++;
 
-            ev.HasMorePages = _mCurrentPageIndex < _mStreams.Count;
+            //ev.HasMorePages = _mCurrentPageIndex < _mStreams.Count;
         }
     }
 }

@@ -173,7 +173,7 @@ namespace ZDPress.UI.Views
 
             if (selectedEntity.PressOperationData == null)
             {
-                Dal.LoadPressOperationData(selectedEntity);//загрузим данные длял опреции
+                Dal.LoadPressOperationData(selectedEntity);//загрузим данные для опреции
             }
 
             ChartForm form = (ChartForm)UiHelper.GetFormSingle(typeof(ChartForm));

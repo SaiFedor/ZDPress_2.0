@@ -12,6 +12,7 @@ using ZDPress.Opc;
 using ZDPress.UI.Common;
 using ZDPress.UI.Reports;
 using ZDPress.UI.ViewModels;
+using System.Security.Principal;
 
 namespace ZDPress.UI.Views
 {
@@ -20,7 +21,7 @@ namespace ZDPress.UI.Views
         public ChartFormShowMode Mode { get; set; }
         
         public ZdPressDal Dal { get; set; }
-
+        public String TestString { get; set; }
         public Timer TimerForUpdate { get; set; }
 
         public ChartForm()
@@ -28,26 +29,22 @@ namespace ZDPress.UI.Views
             InitializeComponent();
 
             CustomizeChart();
-
             Dal = new ZdPressDal();
-
             _tooltip = new ToolTip();
 
             Mode = ChartFormShowMode.ShowSavedOperation;
 
-
-
             TimerForUpdate = new Timer {Interval = 1000};
-
 
             TimerForUpdate.Tick += TimerForUpdate_Tick;
 
             OpcResponderSingleton.Instance.OnReceivedDataAction += OnReceivedData;
+           
         }
 
-        private void OnReceivedData(List<OpcParameter> parameters)
+        private void OnReceivedData(string FakeStr)
         {
-            PressOperationData data = PressOperationData.ConvertToPressDataItem(parameters);
+            PressOperationData data = PressOperationData.ConvertToPressDataItem();
 
             if (zdButton5.Enabled != !data.ShowGraph)
             {
@@ -106,6 +103,8 @@ namespace ZDPress.UI.Views
                         _viewModel.UpdateDlinaPramUchFromDb(data.Item1.First().PressOperationId);
                     }));
 	            }
+
+            _viewModel.UpdatePlcStatus();
         }
 
 
@@ -150,6 +149,19 @@ namespace ZDPress.UI.Views
         {
             base.OnActivated(e);
 
+            using (WindowsIdentity identity = WindowsIdentity.GetCurrent())
+            {
+                WindowsPrincipal principal = new WindowsPrincipal(identity);
+
+                if (principal.IsInRole(WindowsBuiltInRole.Administrator))
+                {
+                    Program.PressContext.CurrentUser.Role = ControlBasedRightsManager.InitializeRoleByLogin(AppUser.Admin);
+                }
+                else
+                {
+                    Program.PressContext.CurrentUser.Role = ControlBasedRightsManager.InitializeRoleByLogin(AppUser.User);
+                }
+            }
 
             ControlBasedRightsManager.ConfigureControlsByRole(this, 
                 Mode == ChartFormShowMode.ShowSavedOperation ? Program.PressContext.CurrentUser.Role : null);
@@ -223,6 +235,8 @@ namespace ZDPress.UI.Views
             textBoxMaxUsil.DataBindings.Clear();
             textBoxDlinaPramUch.DataBindings.Clear();
             buttonSaveOperation.DataBindings.Clear();
+            zdLabel27.DataBindings.Clear();
+            label13.DataBindings.Clear();
         }
 
 
@@ -245,8 +259,14 @@ namespace ZDPress.UI.Views
             textBoxUsil100.DataBindings.Add(new Binding("Text", ViewModel, "PressOperation.Power100Mm", true, DataSourceUpdateMode.OnPropertyChanged));
             textBoxMaxUsil.DataBindings.Add(new Binding("Text", ViewModel, "PressOperation.MaxPower", true, DataSourceUpdateMode.OnPropertyChanged));
             textBoxDlinaPramUch.DataBindings.Add(new Binding("Text", ViewModel, "PressOperation.LengthLines", true, DataSourceUpdateMode.OnPropertyChanged));
-
-            textBoxNatag.TextChanged += changeColor;   
+            zdLabel27.DataBindings.Add(new Binding("BackColor", ViewModel, "PlcConnectState", true, DataSourceUpdateMode.OnPropertyChanged));
+            textBoxNatag.TextChanged += changeColor;
+            if (!ViewModel.CanSaveOperation)
+            {
+                label13.DataBindings.Add(new Binding("Text", ViewModel, "PressOperation.Id", true, DataSourceUpdateMode.OnPropertyChanged));
+                label13.TextChanged += PrintCmd1;
+            }
+            
             //TODO: разобраться почему не работает биндинг
             //buttonSaveOperation.DataBindings.Add(new Binding("Visible", ViewModel, "CanSaveOperation", true, DataSourceUpdateMode.OnPropertyChanged));
 
@@ -268,10 +288,7 @@ namespace ZDPress.UI.Views
             {
                 textBoxNatag.BackColor = Convert.ToDecimal(textBoxNatag.Text) > 2 ? System.Drawing.Color.Red : System.Drawing.Color.White;
             }
-            
-            //throw new NotImplementedException();
         }
-
 
 
 
@@ -373,6 +390,10 @@ namespace ZDPress.UI.Views
 
         private void OnBackClick()
         {
+            if (!ViewModel.CanSaveOperation)
+            {
+                label13.TextChanged -= PrintCmd1;
+            }
             Hide();
         }
 
@@ -388,18 +409,27 @@ namespace ZDPress.UI.Views
         }
 
 
-        private void button1_Click(object sender, EventArgs e)
+        public void PrintCmd1(object sender, EventArgs ev)
         {
+            if (ViewModel.PressOperation.Id > 0)
+            {
+                ReportForm reportForm = new ReportForm();
+                ReportDto reportDto = GetReportDto();
+                reportForm.ReportDto = reportDto;
+                reportForm.ShowDialog();
+            }
+           
+        }
+
+
+        public void button1_Click(object sender, EventArgs e)
+        {
+            ReportDto reportDto = GetReportDto();
+    
             ReportForm reportForm = new ReportForm();
 
-           
-
-            ReportDto reportDto = GetReportDto();
-
-
-
-            reportForm.ReportDto = reportDto; 
-
+            reportForm.ReportDto = reportDto;
+            
             reportForm.ShowDialog();
         }
 
@@ -426,7 +456,9 @@ namespace ZDPress.UI.Views
                 {
                     reportDto.NomerDiag = this.textBoxNomerDiagrammi.Text;//ViewModel.PressOperation.DiagramNumber,
                 }));
-                
+
+            
+               reportDto.DateTimeCreate = DateTime.Now.ToString(); 
                textBoxNomerOsi.Invoke(new Action(() => {reportDto.NomerOsi = textBoxNomerOsi.Text;}));//ViewModel.PressOperation.AxisNumber,})); 
                textBoxNomerZavoda.Invoke(new Action(() => {reportDto.NomerZavoda = textBoxNomerZavoda.Text;}));//ViewModel.PressOperation.FactoryNumber,})); 
                comboBoxTipColesPary.Invoke(new Action(() => { reportDto.TipKolesPar = comboBoxTipColesPary.Text; }));//ViewModel.PressOperation.WheelType,})); 
@@ -444,9 +476,6 @@ namespace ZDPress.UI.Views
             
             return reportDto;
         }
-
-        
-
 
         private void zdButton1_Click(object sender, EventArgs e)
         {
@@ -469,7 +498,6 @@ namespace ZDPress.UI.Views
             {
                 MessageBox.Show(@"Пожалуйста, укажите операцию");
             }
-
         }
 
 

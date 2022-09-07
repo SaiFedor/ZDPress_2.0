@@ -9,6 +9,7 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using ZDPress.Dal.Entities;
 using ZDPress.Opc;
+using System.IO;
 
 namespace ZDPress.UI.Reports
 {
@@ -21,7 +22,7 @@ namespace ZDPress.UI.Reports
         {
             get 
             {
-                return ConfigurationManager.AppSettings["RegisterTemplatePath"];
+                return Environment.CurrentDirectory + @"\Resources\Templates\register.xlsx";
             }
         }
 
@@ -31,8 +32,8 @@ namespace ZDPress.UI.Reports
         public string PassportTemplatePath
         {
             get
-            {
-                return ConfigurationManager.AppSettings["PassportTemplatePath"];
+            {                
+                return Environment.CurrentDirectory + @"\Resources\Templates\passport.xlsx";
             }
         }
 
@@ -44,13 +45,21 @@ namespace ZDPress.UI.Reports
             }
         }
 
-        
+        public string RegisterArhivePath
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["RegisterArhivePath"];
+            }
+        }
+
 
         const int max_rows_in_sheet = 45;
         private static Microsoft.Office.Interop.Excel.Application application;
         private static Workbook workBook;
         private static Worksheet worksheet;
 
+        //Запись в журнал
         public bool CreateExcel(PressOperation operation) 
         {
             //Открываем шаблон
@@ -63,10 +72,25 @@ namespace ZDPress.UI.Reports
  
             try
             {
-                workBook = application.Workbooks.Open(Filename: RegisterTemplatePath);
+                string filePath = RegisterArhivePath + @"\register.xlsx";
+                Logger.Log.Debug("Файл журнала: " + filePath);
+                Logger.Log.Debug("Файл шаблона журнала: " + RegisterTemplatePath);
+                if (File.Exists(filePath))
+                {
+                    workBook = application.Workbooks.Open(Filename: RegisterArhivePath + @"\register.xlsx");
+
+                    Logger.Log.Debug("Файл журнала есть: " + filePath);
+                }
+                else
+                {
+                    Logger.Log.Debug("Файла журнала не: " + filePath);
+                    File.Copy(RegisterTemplatePath, RegisterArhivePath + @"\register.xlsx");
+                    workBook = application.Workbooks.Open(Filename: RegisterTemplatePath);
+                }                
             }
             catch (Exception)
             {
+                Logger.Log.Debug("Ошибка создания файла журнала: ");
                 MessageBox.Show(@"Ошибка записи! Файл не существует или занят другим приложением!");
                 return false;
             }  
@@ -217,7 +241,7 @@ namespace ZDPress.UI.Reports
         [DllImport("user32.dll", SetLastError = true)]
         static extern uint GetWindowThreadProcessId(int hWnd, ref int lpdwProcessId);
 
-
+        // Создание паспорта
         public bool CreatePassportExcel(PressOperation left, PressOperation right)
         {
             application = new Microsoft.Office.Interop.Excel.Application
@@ -232,12 +256,6 @@ namespace ZDPress.UI.Reports
                 //Открываем шаблон
                 //Приложение самого Excel
                 workBook = application.Workbooks.Open(PassportTemplatePath);
-            }
-             catch (Exception)
-            {
-                MessageBox.Show(@"Ошибка записи! Файл не существует или занят другим приложением!");
-                return false;
-            }
                 worksheet = workBook.ActiveSheet as Worksheet;
                 //Заполняем файл (шаблон)
                 //Заполняем дату формирования КП
@@ -305,12 +323,19 @@ namespace ZDPress.UI.Reports
 
 
                 //Пока сохраняем
-                workBook.SaveAs(PassportsArhivePath + left.AxisNumber);
+                workBook.SaveAs(PassportsArhivePath + "\\" + left.AxisNumber);
 
                 //Печатаем файл
-                worksheet.PrintOutEx();
+                //worksheet.PrintOutEx();
                 CloseExcel();
                 return true;
+            }
+             catch (Exception)
+            {
+                MessageBox.Show(@"Ошибка записи! Файл не существует или занят другим приложением!");
+                return false;
+            }
+               
         }
     }
     

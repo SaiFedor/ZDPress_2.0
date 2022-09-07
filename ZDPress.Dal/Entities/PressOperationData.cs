@@ -44,34 +44,17 @@ namespace ZDPress.Dal.Entities
         public Exception Exception { get; set; }
 
 
-        public static PressOperationData ConvertToPressDataItem(List<OpcParameter> parameters)
+        public static PressOperationData ConvertToPressDataItem()
         {
-            PressOperationData item = new PressOperationData();            
-            parameters.ForEach(p => InitInternal(p, item));
+            PressOperationData item = new PressOperationData();
+            //parameters.ForEach(p => InitInternal(p, item));
+
+            item.DispPress = Tags.DispPress.Value;
+
+            item.DlinaSopr = Tags.DlinaSopr.Value;
+
+            item.ShowGraph = Tags.Control_Bits.Bit_Ctrl.GetBit(0);
             return item;
-        }
-
-        private static void InitInternal(OpcParameter parameter, PressOperationData item)
-        {
-            if (parameter == null)
-            {
-                return;
-            }
-            dynamic val = Convert.ChangeType(parameter.ParameterValue, parameter.ParameterType);
-
-            if (parameter.ParameterName == OpcConsts.DispPress)
-            {
-                item.DispPress = val;
-            }
-            if (parameter.ParameterName == OpcConsts.DlinaSopr)
-            {
-                item.DlinaSopr = val;
-            }
-            
-            if (parameter.ParameterName == OpcConsts.ShowGraph)
-            {
-                item.ShowGraph = val == 1;
-            }
         }
     }
 }
