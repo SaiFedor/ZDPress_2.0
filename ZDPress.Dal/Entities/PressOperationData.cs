@@ -13,7 +13,7 @@ namespace ZDPress.Dal.Entities
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public int Id { get; set; }
+        public Int64 Id { get; set; }
 
         /// <summary>
         /// давление, по которому строится график
@@ -23,7 +23,7 @@ namespace ZDPress.Dal.Entities
         /// <summary>
         /// Parent Id
         /// </summary>
-        public int PressOperationId { get; set; }
+        public Int64 PressOperationId { get; set; }
 
         /// <summary>
         /// расстояние, по которому строится график

@@ -134,15 +134,19 @@ namespace ZDPress.UI
             {
                 // TODO: проверить что обновилось на форме
                 ChartForm form = (ChartForm)UiHelper.GetFormSingle(typeof(ChartForm));
-                var operation = form.ViewModel.PressOperation;
-                ReportDto reportDto = form.GetReportDto();
+                if (form.ViewModel != null)
+                {
+                    var operation = form.ViewModel.PressOperation;
+                    ReportDto reportDto = form.GetReportDto();
 
-                operation.Id = CurrentPressOperation.Id;
+                    operation.Id = CurrentPressOperation.Id;
 
-                _dal.UpdatePressOperationFieldTotal("OperationStop", operation, DateTime.Now, DbType.DateTime);
+                    _dal.UpdatePressOperationFieldTotal("OperationStop", operation, DateTime.Now, DbType.DateTime);
 
-                _lastDlinaSopr = 0;
-                CurrentPressOperation.Id = 0;
+                    _lastDlinaSopr = 0;
+                    CurrentPressOperation.Id = 0;
+                }
+               
             }
         }
 

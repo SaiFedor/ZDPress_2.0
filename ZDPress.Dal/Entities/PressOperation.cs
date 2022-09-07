@@ -28,7 +28,7 @@ namespace ZDPress.Dal.Entities
         /// <summary>
         /// Ид.
         /// </summary>
-        public int Id { get; set; }
+        public Int64 Id { get; set; }
         /// <summary>
         /// Номер завода.
         /// </summary>

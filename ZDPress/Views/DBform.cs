@@ -2,6 +2,7 @@
 using log4net.Appender;
 using System;
 using System.Configuration;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using ZDPress.Dal;
 using ZDPress.Dal.Entities;
@@ -41,10 +42,9 @@ namespace ZDPress.UI.Views
         protected override void OnActivated(EventArgs e)
         {
             base.OnActivated(e);
-
             zdLabel17.Text = ConfigurationManager.AppSettings["PrinterName"];
-            zdLabel22.Text = ConfigurationManager.AppSettings["RegisterArhivePath"]; 
-            
+            zdLabel22.Text = ConfigurationManager.AppSettings["RegisterArhivePath"];
+
             zdLabel26.Text = ConfigurationManager.AppSettings["PassportsArhivePath"];
             ViewModel.StartArchiveDate = this.dateTimePicker1.Value.Date;
             ViewModel.EndArchiveDate = this.dateTimePicker2.Value.Date;
@@ -52,6 +52,10 @@ namespace ZDPress.UI.Views
             ViewModel.EndClearDate = this.dateTimePicker4.Value.Date;
             zdLabel10.Text = ConfigurationManager.AppSettings["AutoBackupPath"];
             comboBox1.SelectedItem = ConfigurationManager.AppSettings["BackupDate"];
+            zdLabel12.Text = ConfigurationManager.AppSettings["BackupPath"];
+
+            dateTimePicker2.MaxDate = DateTime.Now.Date;
+            dateTimePicker4.MaxDate = DateTime.Now.Date;
 
             log4net.Repository.Hierarchy.Hierarchy logHierarchy =
 (log4net.Repository.Hierarchy.Hierarchy)LogManager.GetRepository();
@@ -93,7 +97,7 @@ namespace ZDPress.UI.Views
             int day = 0;
             int.TryParse(comboBox1.SelectedItem.ToString(), out day);
             Configuration configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            configuration.AppSettings.Settings["BackupDate"].Value = day.ToString(); 
+            configuration.AppSettings.Settings["BackupDate"].Value = day.ToString();
             configuration.Save();
 
             ConfigurationManager.RefreshSection("appSettings");
@@ -103,7 +107,7 @@ namespace ZDPress.UI.Views
         {
             FolderBrowserDialog fbd = new FolderBrowserDialog();
             if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {               
+            {
                 zdLabel10.Text = fbd.SelectedPath;
                 Configuration configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
                 configuration.AppSettings.Settings["AutoBackupPath"].Value = fbd.SelectedPath;
@@ -148,14 +152,21 @@ namespace ZDPress.UI.Views
         }
 
         // Сделать бэкап
-        private void zdButton5_Click(object sender, EventArgs e)
+        private async void zdButton5_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(zdLabel12.Text))
             {
-                //MessageBox.Show("Подождите. Идёт создание архива базы данных! Это может занять несколько минут.");
+                zdButton5.Enabled = false;
 
-                bool result = Dal.BackupJsonOperationAsync(ViewModel.StartArchiveDate, ViewModel.EndArchiveDate, zdLabel12.Text);
+                zdLabel24.Text = @"Подождите! Идёт создание архива!";
 
+                bool result = await Task.Run(() => Dal.BackupJsonOperationAsync(
+                    ViewModel.StartArchiveDate,
+                    ViewModel.EndArchiveDate,
+                    zdLabel12.Text));
+
+                zdLabel24.Text = string.Empty;
+                zdButton5.Enabled = true;
                 if (result)
                 {
                     MessageBox.Show(@"Создание архива выполнено успешно!");
@@ -171,12 +182,19 @@ namespace ZDPress.UI.Views
             }
         }
         //Воостановить БД из файла
-        private void zdButton8_Click(object sender, EventArgs e)
+        private async void zdButton8_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(zdLabel13.Text))
             {
-                //MessageBox.Show("Подождите. Идёт восстановление базы данных из архива! Это может занять несколько минут.");
-                RestoreResult restoreResult = Dal.RestoreBackupJsonOperation(zdLabel13.Text);
+                zdButton8.Enabled = false;
+                zdLabel24.Text = @"Подождите! Идёт восстановление данных!";
+
+                RestoreResult restoreResult = await Task.Run(() => Dal.RestoreBackupJsonOperation(
+                   zdLabel13.Text));
+
+                zdButton8.Enabled = true;
+                zdLabel24.Text = string.Empty;
+
                 if (restoreResult.result)
                 {
                     MessageBox.Show(@"Восстановление данных выполнено успешно! Восстановленно  " + restoreResult.restoreCount.ToString() + "  операций.");
@@ -190,14 +208,22 @@ namespace ZDPress.UI.Views
             {
                 MessageBox.Show(@"Ошибка! Выберите файл для восстановления!");
             }
-
         }
 
         // Очистака таблиц за выбранный период
-        private void zdButton3_Click(object sender, EventArgs e)
+        private async void zdButton3_Click(object sender, EventArgs e)
         {
-            Dal.ClearOperationsTables(ViewModel.StartCleareDate, ViewModel.EndClearDate);
-            if (Dal.ClearOperationsTables(ViewModel.StartCleareDate, ViewModel.EndClearDate))
+            zdButton3.Enabled = false;
+            zdLabel24.Text = @"Подождите! Идёт очистка базы данных!";
+
+            bool clearResult = await Task.Run(() => Dal.ClearOperationsTables(
+                   ViewModel.StartCleareDate,
+                   ViewModel.EndClearDate));
+
+            zdButton3.Enabled = true;
+            zdLabel24.Text = string.Empty;
+
+            if (clearResult)
             {
                 MessageBox.Show(@"Очистка базы данных выполнена упешно!");
             }
@@ -211,10 +237,15 @@ namespace ZDPress.UI.Views
         private void zdLabel12_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog fbd = new FolderBrowserDialog();
-            if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (fbd.ShowDialog() == DialogResult.OK)
             {
                 ViewModel.saveFilePath = fbd.SelectedPath;
                 zdLabel12.Text = fbd.SelectedPath;
+                Configuration configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+                configuration.AppSettings.Settings["BackupPath"].Value = zdLabel12.Text;
+                configuration.Save();
+
+                ConfigurationManager.RefreshSection("appSettings");
             }
         }
 

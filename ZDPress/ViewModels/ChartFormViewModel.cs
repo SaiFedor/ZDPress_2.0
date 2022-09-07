@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 using ZDPress.Dal;
 using ZDPress.Dal.Entities;
@@ -66,19 +67,19 @@ namespace ZDPress.UI.ViewModels
 
         public string ChartDataMimeType { get; set; }
 
-        public void UpdateMaxSoprFromDb(int operationId) 
+        public void UpdateMaxSoprFromDb(Int64 operationId) 
         {
             PressOperation.LengthSopriazh = Dal.GetMaxSopr(operationId);
         }
 
 
-        public void UpdateMaxUsilZapreFromDb(int operationId)
+        public void UpdateMaxUsilZapreFromDb(Int64 operationId)
         {
             PressOperation.MaxPower = Dal.GetMaxZapress(operationId);
         }
 
 
-        public void UpdateDlinaPramUchFromDb(int operationId)
+        public void UpdateDlinaPramUchFromDb(Int64 operationId)
         {
             PressOperation.LengthLines = Dal.GetDlinaPramUch(operationId);
         }

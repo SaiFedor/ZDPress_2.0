@@ -4,6 +4,7 @@ using System;
 using System.Configuration;
 using System.IO;
 using System.Security.Principal;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using ZDPress.Dal;
 using ZDPress.Opc;
@@ -253,7 +254,7 @@ namespace ZDPress.UI.Views
             toolStripButtonLogOut.Visible = false;
         }
 
-        protected override void OnActivated(EventArgs e)
+        protected async override void OnActivated(EventArgs e)
         {
             base.OnActivated(e);
 
@@ -305,7 +306,12 @@ namespace ZDPress.UI.Views
                     DateTime startDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month - 1, DateTime.Now.Day);
                     DateTime endDate = DateTime.Now.Date;
 
-                    if (Dal.BackupJsonOperationAsync(startDate, endDate, configuration.AppSettings.Settings["AutoBackupPath"].Value))
+                    // bool resultBackup = AutoBackup(startDate, endDate, configuration.AppSettings.Settings["AutoBackupPath"].Value).Result;
+                    bool resultBackup = await Task.Run(() => Dal.BackupJsonOperationAsync(
+                     startDate,
+                     endDate,
+                     configuration.AppSettings.Settings["AutoBackupPath"].Value));
+                    if (resultBackup)
                     {
                         MessageBox.Show(@"Автоматическое архивирование выполнено успешно!");
                         configuration.AppSettings.Settings["BackupDone"].Value = true.ToString();
@@ -334,6 +340,16 @@ namespace ZDPress.UI.Views
             }
             
         }
+
+        //private async Task<bool> AutoBackup(DateTime startDate, DateTime endDate, string saveFilePath)
+        //{
+        //    //return await Task.Run(() => Dal.BackupJsonOperationAsync(
+        //    //        startDate,
+        //    //        endDate,
+        //    //        saveFilePath));
+
+        //}
+
         private void toolStripButtonLogOut_Click(object sender, EventArgs e)
         {
             LoginAsUser();

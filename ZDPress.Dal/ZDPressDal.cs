@@ -13,11 +13,7 @@ using System.IO;
 using System.Text;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-//using log4net.Repository.Hierarchy;
-using Microsoft.Extensions.DependencyInjection;
-using System.Data.Entity;
+using System.Threading;
 
 namespace ZDPress.Dal
 {
@@ -27,22 +23,22 @@ namespace ZDPress.Dal
         static bool isConnected {get;set;}
         public ZdPressDal()
         {
-            //if (!isConnected)
-            //{
-            //    DbProviderFactory factory = SqlClientFactory.Instance;
-            //    using (DbConnection conn = OpenConnection(factory, ConnectionString))
-            //    {
-            //        string connState = conn.State.ToString();
-            //        if (conn.State == ConnectionState.Open)
-            //        {
-            //            isConnected = true;
-            //        }
-            //        else
-            //        {
-            //            CreateDB(factory);
-            //        }
-            //    }
-            //}                  
+            if (!isConnected)
+            {
+                DbProviderFactory factory = SqlClientFactory.Instance;
+                using (DbConnection conn = OpenConnection(factory, ConnectionString))
+                {
+                    string connState = conn.State.ToString();
+                    if (conn.State == ConnectionState.Open)
+                    {
+                        isConnected = true;
+                    }
+                    else
+                    {
+                        CreateDB(factory);
+                    }
+                }
+            }
         }
 
         private void CreateDB(DbProviderFactory factory)
@@ -54,7 +50,7 @@ namespace ZDPress.Dal
                     try
                     {
                         Logger.Log.Debug("Создана новая БД - ZDPress1");
-                        cmd.ExecuteNonQuery();
+                        cmd.ExecuteNonQuery();                        
                     }
                     catch (Exception ex)
                     {
@@ -63,16 +59,20 @@ namespace ZDPress.Dal
                         throw;
                     }
                 }
+                conn.Close();
             }
 
-            using (DbConnection conn = OpenConnection(factory, ConnectionString))
+            Thread.Sleep(10000);
+
+
+            using (DbConnection conn1 = OpenConnection(factory, ConnectionString))
             {
-                using (DbCommand cmd = CreateTextCommand(conn, CreateOperationTableCommandAsText()))
+                using (DbCommand cmd1 = CreateTextCommand(conn1, CreateOperationTableCommandAsText()))
                 {
                     try
                     {
                         Logger.Log.Debug("Создана таблица Operations");
-                        cmd.ExecuteNonQuery();
+                        cmd1.ExecuteNonQuery();
                     }
                     catch (Exception ex)
                     {
@@ -81,12 +81,12 @@ namespace ZDPress.Dal
                         throw;
                     }
                 }
-                using (DbCommand cmd1 = CreateTextCommand(conn, CreateOperationDataTableCommandAsText()))
+                using (DbCommand cmd2 = CreateTextCommand(conn1, CreateOperationDataTableCommandAsText()))
                 {
                     try
                     {
                         Logger.Log.Debug("Создана таблица OperationsData");
-                        cmd1.ExecuteNonQuery();
+                        cmd2.ExecuteNonQuery();
                     }
                     catch (Exception ex)
                     {
@@ -157,12 +157,12 @@ PRIMARY KEY CLUSTERED
 
         private string CreateDBCommandAsText()
         {
-            return @"CREATE DATABASE [ZDPress1]
+            return @"CREATE DATABASE [ZDPress]
  CONTAINMENT = NONE
  ON PRIMARY
-(NAME = N'ZDPress', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\DATA\ZDPress1.mdf' , SIZE = 94208KB , MAXSIZE = UNLIMITED, FILEGROWTH = 1024KB )
+(NAME = N'ZDPress', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\DATA\ZDPress.mdf' , SIZE = 94208KB , MAXSIZE = UNLIMITED, FILEGROWTH = 1024KB )
  LOG ON
-(NAME = N'ZDPress_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\DATA\ZDPress1_log.ldf' , SIZE = 1108800KB , MAXSIZE = 2048GB , FILEGROWTH = 10 %)
+(NAME = N'ZDPress_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\DATA\ZDPress_log.ldf' , SIZE = 1108800KB , MAXSIZE = 2048GB , FILEGROWTH = 10 %)
  WITH CATALOG_COLLATION = DATABASE_DEFAULT
 
 
@@ -179,10 +179,10 @@ end";
 
         public string ConnectionString
         {
-            get { return ConfigurationManager.ConnectionStrings["ZDPress1"].ConnectionString; }
+            get { return ConfigurationManager.ConnectionStrings["ZDPress"].ConnectionString; }
         }
 
-            public bool ClearOperationsTables (DateTime startDate, DateTime endDate)
+            public async Task<bool>ClearOperationsTables (DateTime startDate, DateTime endDate)
         {
             DbProviderFactory factory = SqlClientFactory.Instance;
            
@@ -194,7 +194,7 @@ end";
                     AddParameter(cmd, "@endDate", endDate, DbType.DateTime);
                     try
                     {
-                        cmd.ExecuteNonQuery();
+                        await cmd.ExecuteNonQueryAsync();
                     }
                     catch (Exception ex)
                     {
@@ -210,7 +210,7 @@ end";
                     AddParameter(cmd, "@endDate", endDate, DbType.DateTime);
                     try
                     {
-                        cmd.ExecuteNonQuery();
+                        await cmd.ExecuteNonQueryAsync();
                     }
                     catch (Exception ex)
                     {
@@ -223,7 +223,7 @@ end";
             }
         }
 
-        public RestoreResult RestoreBackupJsonOperation(string filePath)
+        public async Task<RestoreResult> RestoreBackupJsonOperation(string filePath)
         {
             RestoreResult restoreResult = new RestoreResult();
             try
@@ -232,59 +232,77 @@ end";
                 var operationsDes = JsonConvert.DeserializeObject<List<PressOperation>>(jsonFile);
                 DbProviderFactory factory = SqlClientFactory.Instance;
 
-
-                using (DbConnection conn = OpenConnectionAsinc(factory, ConnectionString))
+                //using (DbConnection conn = OpenConnectionAsinc(factory, ConnectionString))
+                //{
+                DbConnection conn = OpenConnectionAsinc(factory, ConnectionString);
+                using (DbCommand cmd = CreateTextCommand(conn, InsertPressOperationCommandAsTextBackup()))
                 {
-                    using (DbCommand cmd = CreateTextCommand(conn, InsertPressOperationCommandAsTextBackup()))
+                    try
                     {
-                        cmd.CommandTimeout = 100000;
-                        try
+                        foreach (var pressOperation in operationsDes)
                         {
-                            foreach (var pressOperation in operationsDes)
+                            AddParameter(cmd, "@Id", pressOperation.Id, DbType.Int32);
+                            AddParameter(cmd, "@OperationStart", pressOperation.OperationStart, DbType.DateTime);
+                            AddParameter(cmd, "@OperationStop", pressOperation.OperationStop, DbType.DateTime);
+                            AddParameter(cmd, "@FactoryNumber", pressOperation.FactoryNumber, DbType.String);
+                            AddParameter(cmd, "@WheelNumber", pressOperation.WheelNumber, DbType.String);
+                            AddParameter(cmd, "@DiagramNumber", pressOperation.DiagramNumber, DbType.String);
+                            AddParameter(cmd, "@AxisNumber", pressOperation.AxisNumber, DbType.String);
+                            AddParameter(cmd, "@WheelType", pressOperation.WheelType, DbType.String);
+                            AddParameter(cmd, "@Side", pressOperation.Side, DbType.String);
+                            AddParameter(cmd, "@DWheel", pressOperation.DWheel, DbType.Decimal);
+                            AddParameter(cmd, "@DAxis", pressOperation.DAxis, DbType.Decimal);
+                            AddParameter(cmd, "@LengthStup", pressOperation.LengthStup, DbType.Int32);
+                            AddParameter(cmd, "@Natiag", pressOperation.Natiag, DbType.Decimal);
+                            AddParameter(cmd, "@LengthSopriazh", pressOperation.LengthSopriazh, DbType.Decimal);
+                            AddParameter(cmd, "@Power100mm", pressOperation.Power100Mm, DbType.Decimal);
+                            AddParameter(cmd, "@MaxPower", pressOperation.MaxPower, DbType.Decimal);
+                            AddParameter(cmd, "@LengthLines", pressOperation.LengthLines, DbType.Int32);
+                            object res = cmd.ExecuteScalar();
+
+                            Int64 id = (Int64?)res ?? pressOperation.Id;
+
+
+                            if (res != null)
                             {
-                                AddParameter(cmd, "@Id", pressOperation.Id, DbType.Int32);
-                                AddParameter(cmd, "@OperationStart", pressOperation.OperationStart, DbType.DateTime);
-                                AddParameter(cmd, "@OperationStop", pressOperation.OperationStop, DbType.DateTime);
-                                AddParameter(cmd, "@FactoryNumber", pressOperation.FactoryNumber, DbType.String);
-                                AddParameter(cmd, "@WheelNumber", pressOperation.WheelNumber, DbType.String);
-                                AddParameter(cmd, "@DiagramNumber", pressOperation.DiagramNumber, DbType.String);
-                                AddParameter(cmd, "@AxisNumber", pressOperation.AxisNumber, DbType.String);
-                                AddParameter(cmd, "@WheelType", pressOperation.WheelType, DbType.String);
-                                AddParameter(cmd, "@Side", pressOperation.Side, DbType.String);
-                                AddParameter(cmd, "@DWheel", pressOperation.DWheel, DbType.Decimal);
-                                AddParameter(cmd, "@DAxis", pressOperation.DAxis, DbType.Decimal);
-                                AddParameter(cmd, "@LengthStup", pressOperation.LengthStup, DbType.Int32);
-                                AddParameter(cmd, "@Natiag", pressOperation.Natiag, DbType.Decimal);
-                                AddParameter(cmd, "@LengthSopriazh", pressOperation.LengthSopriazh, DbType.Decimal);
-                                AddParameter(cmd, "@Power100mm", pressOperation.Power100Mm, DbType.Decimal);
-                                AddParameter(cmd, "@MaxPower", pressOperation.MaxPower, DbType.Decimal);
-                                AddParameter(cmd, "@LengthLines", pressOperation.LengthLines, DbType.Int32);
-                                object res = cmd.ExecuteScalar();
+                                restoreResult.restoreCount++;
+                                string cmdString = string.Empty;
 
-                                int id = (int?)res ?? pressOperation.Id;
-
-                                cmd.Parameters.Clear();
-                                if (res != null)
+                                foreach (var operData in pressOperation.PressOperationData)
                                 {
-                                    restoreResult.restoreCount++;
+                                    cmdString = cmdString + GetInsertPressOperationDataCommandAsTextForRestoreWithIndex(operData.Id.ToString());
+                                }
+                                using (DbCommand cmd1 = CreateTextCommand(conn, cmdString))
+                                {
                                     foreach (var operData in pressOperation.PressOperationData)
                                     {
-                                        InsertPressOperationData(operData, conn);
+                                        InsertPressOperationDataPrepare(operData, cmd1, operData.Id.ToString());
                                     }
+                                    cmd1.ExecuteNonQuery();
+                                    cmd1.Parameters.Clear();
                                 }
-                            }
-                            restoreResult.result = true;
-                            return restoreResult;
-                        }
-                        catch (Exception ex)
-                        {
-                            Logger.Log.Error("Error Ошибка восстановления базы данных", ex);
-                            restoreResult.result = false;
-                            return restoreResult;
-                            throw;
+
+                                //foreach (var operData in pressOperation.PressOperationData)
+                                //    {
+                                //        InsertPressOperationData(operData, conn);
+                                //    }
+                                //}
+                                cmd.Parameters.Clear();
+                            }                            
                         }
                     }
+                    catch (Exception ex)
+                    {
+                        Logger.Log.Error("Error Ошибка восстановления базы данных", ex);
+                        restoreResult.result = false;
+                        conn.Close();
+                        return restoreResult;
+                        throw;
+                    }
                 }
+                restoreResult.result = true;
+                conn.Close();
+                return restoreResult;
             }
             catch (Exception ex)
             {
@@ -301,8 +319,7 @@ end";
 
         }
 
-        public bool BackupJsonOperationAsync(DateTime startDate, DateTime endDate, string saveFilePath)
-
+        public async Task<bool> BackupJsonOperationAsync(DateTime startDate, DateTime endDate, string saveFilePath)
         {
             List<PressOperation> pressOperationList = new List<PressOperation>();
             BindingList<PressOperationData> operationDataList = new BindingList<PressOperationData>();
@@ -321,7 +338,7 @@ end";
                     AddParameter(cmd, "@endDate", endDate, DbType.DateTime);
                     try
                     {
-                        using (IDataReader reader = cmd.ExecuteReader())
+                        using (IDataReader reader = await cmd.ExecuteReaderAsync())
                         {
                             while (reader.Read())
                             {
@@ -381,7 +398,7 @@ end";
                     AddParameter(cmd1, "@endDate", endDate, DbType.DateTime);
                     try
                     {
-                        using (IDataReader reader1 = cmd1.ExecuteReader())
+                        using (IDataReader reader1 = await cmd1.ExecuteReaderAsync())
                         {
                             while (reader1.Read())
                             {
@@ -444,19 +461,27 @@ end";
                 cmd.Parameters.Clear();
             }
         }
+        public void InsertPressOperationDataPrepare(PressOperationData pressOperationData, DbCommand cmd, string index)
+        {
+            AddParameter(cmd, "@Id" + index, pressOperationData.Id, DbType.Int32);
+            AddParameter(cmd, "@PressOperationID" + index, pressOperationData.PressOperationId, DbType.Int32);
+            AddParameter(cmd, "@DlinaSopr" + index, pressOperationData.DlinaSopr, DbType.Int32);
+            AddParameter(cmd, "@DispPress" + index, pressOperationData.DispPress, DbType.Double);
+            AddParameter(cmd, "@DateInsert" + index, pressOperationData.DateInsert, DbType.DateTime);
+        }
 
-    /// <summary>
-    /// Разобраться с постоянным открытием соединения.
-    /// </summary>
-    /// <param name="pressOperationData"></param>
-    public void InsertPressOperationData(PressOperationData pressOperationData)
+        /// <summary>
+        /// Разобраться с постоянным открытием соединения.
+        /// </summary>
+        /// <param name="pressOperationData"></param>
+        public void InsertPressOperationData(PressOperationData pressOperationData)
     {
         DbProviderFactory factory = SqlClientFactory.Instance;
         using (DbConnection conn = OpenConnection(factory, ConnectionString))
         {
             using (DbCommand cmd = CreateTextCommand(conn, GetInsertPressOperationDataCommandAsText()))
             {
-                AddParameter(cmd, "@PressOperationID", pressOperationData.PressOperationId, DbType.Int32);
+                AddParameter(cmd, "@PressOperationID", pressOperationData.PressOperationId, DbType.Int64);
                 AddParameter(cmd, "@DlinaSopr", pressOperationData.DlinaSopr, DbType.Int32);
                 AddParameter(cmd, "@DispPress", pressOperationData.DispPress, DbType.Double);
                 cmd.ExecuteNonQuery();
@@ -478,6 +503,11 @@ end";
         private string GetInsertPressOperationDataCommandAsTextForRestore()
         {
             return "SET IDENTITY_INSERT [dbo].[PressOperationData] ON; INSERT INTO [dbo].[PressOperationData]([Id], [DispPress], [DlinaSopr], [PressOperationID], [DateInsert]) VALUES(@Id, @DispPress,  @DlinaSopr, @PressOperationID, @DateInsert); SET IDENTITY_INSERT[dbo].[PressOperationData] OFF";
+        }
+
+        private string GetInsertPressOperationDataCommandAsTextForRestoreWithIndex(string index)
+        {
+            return "SET IDENTITY_INSERT [dbo].[PressOperationData] ON; INSERT INTO [dbo].[PressOperationData]([Id], [DispPress], [DlinaSopr], [PressOperationID], [DateInsert]) VALUES(@Id" + index + ", @DispPress" + index + ",  @DlinaSopr" + index + ", @PressOperationID" + index + ", @DateInsert" + index + "); SET IDENTITY_INSERT[dbo].[PressOperationData] OFF;";
         }
 
         private string GetInsertPressOperationDataCommandAsText()
@@ -561,7 +591,7 @@ end";
         }
 
 
-        public int SaveOrUpdatePressOperation(PressOperation pressOperation)
+        public Int64 SaveOrUpdatePressOperation(PressOperation pressOperation)
         {
             Logger.Log.Info("Создаём новую операцию в БД ConnectionString = " + ConnectionString);
             DbProviderFactory factory = SqlClientFactory.Instance;
@@ -591,7 +621,7 @@ end";
                     }
                     object res = cmd.ExecuteScalar();
                     
-                    int id = (int?) res ?? pressOperation.Id;
+                    Int64 id = (Int64?) res ?? pressOperation.Id;
 
                     cmd.Parameters.Clear();
                     
@@ -731,7 +761,7 @@ SET IDENTITY_INSERT [dbo].[PressOperations] OFF";
         {
             DbConnection conn = factory.CreateConnection();
             conn.ConnectionString = connectionString;
-            conn.OpenAsync();
+            conn.Open();
             return conn;
         }
 
@@ -740,7 +770,7 @@ SET IDENTITY_INSERT [dbo].[PressOperations] OFF";
         /// </summary>
         /// <param name="operationId">operationId</param>
         /// <returns>int</returns>
-        public int GetMaxSopr(int operationId)
+        public int GetMaxSopr(Int64 operationId)
         {
             const string query = "SELECT TOP 1 [DlinaSopr] FROM [dbo].[PressOperationData] pd WHERE pd.PressOperationId = @operationId ORDER BY [DispPress] DESC";
                                   
@@ -770,7 +800,7 @@ SET IDENTITY_INSERT [dbo].[PressOperations] OFF";
         /// </summary>
         /// <param name="operationId">operationId</param>
         /// <returns>int</returns>
-        public decimal GetMaxZapress(int operationId)
+        public decimal GetMaxZapress(Int64 operationId)
         {
             const string query = "SELECT MAX([DispPress]) FROM [dbo].[PressOperationData] pd where pd.[PressOperationId] = @operationId";
 
@@ -800,7 +830,7 @@ SET IDENTITY_INSERT [dbo].[PressOperations] OFF";
         /// </summary>
         /// <param name="operationId">operationId</param>
         /// <returns>int</returns>
-        public int GetDlinaPramUch(int operationId)
+        public int GetDlinaPramUch(Int64 operationId)
         {
             string query = @"
 
@@ -1035,7 +1065,7 @@ SELECT
 
         public void LoadPressOperationData(PressOperation pressOperation)
         {
-            int operationId = pressOperation.Id;
+            Int64 operationId = pressOperation.Id;
             
             string query = "SELECT  [ID], [DispPress], [DlinaSopr], [PressOperationId], [DateInsert] FROM [ZDPress].[dbo].[PressOperationData]  WHERE [PressOperationId] = @pressOperationId";
             List<PressOperationData> data = new List<PressOperationData>();
