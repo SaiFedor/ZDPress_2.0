@@ -43,54 +43,62 @@ namespace ZDPress.Dal
 
         private void CreateDB(DbProviderFactory factory)
         {
+
+            bool createDbResult = CreateDataBase(factory);
+            Thread.Sleep(10000);
+
+            if (createDbResult)
+            {
+                using (DbConnection conn1 = OpenConnection(factory, ConnectionString))
+                {
+                    using (DbCommand cmd1 = CreateTextCommand(conn1, CreateOperationTableCommandAsText()))
+                    {
+                        try
+                        {
+                            Logger.Log.Debug("Создана таблица Operations");
+                            cmd1.ExecuteNonQuery();
+                        }
+                        catch (Exception ex)
+                        {
+                            Logger.Log.Error("Не удалось создать таблицу Operations", ex);
+                            //return false;
+                            throw;
+                        }
+                    }
+                    using (DbCommand cmd2 = CreateTextCommand(conn1, CreateOperationDataTableCommandAsText()))
+                    {
+                        try
+                        {
+                            Logger.Log.Debug("Создана таблица OperationsData");
+                            cmd2.ExecuteNonQuery();
+                        }
+                        catch (Exception ex)
+                        {
+                            Logger.Log.Error("Не удалось создать таблицу OperationsData", ex);
+                            //return false;
+                            throw;
+                        }
+                    }
+                }
+            }            
+        }
+
+        private bool CreateDataBase (DbProviderFactory factory)
+        {
             using (DbConnection conn = OpenConnection(factory, ConnectionStringDBMaster))
             {
                 using (DbCommand cmd = CreateTextCommand(conn, CreateDBCommandAsText()))
-                {                    
+                {
                     try
-                    {
-                        Logger.Log.Debug("Создана новая БД - ZDPress1");
-                        cmd.ExecuteNonQuery();                        
+                    {                        
+                        cmd.ExecuteNonQuery();
+                        Logger.Log.Debug("Создана новая БД - ZDPress");
+                        return true;
                     }
                     catch (Exception ex)
                     {
                         Logger.Log.Error("Не удалось создать новую БД", ex);
-                        //return false;
-                        throw;
-                    }
-                }
-                conn.Close();
-            }
-
-            Thread.Sleep(10000);
-
-
-            using (DbConnection conn1 = OpenConnection(factory, ConnectionString))
-            {
-                using (DbCommand cmd1 = CreateTextCommand(conn1, CreateOperationTableCommandAsText()))
-                {
-                    try
-                    {
-                        Logger.Log.Debug("Создана таблица Operations");
-                        cmd1.ExecuteNonQuery();
-                    }
-                    catch (Exception ex)
-                    {
-                        Logger.Log.Error("Не удалось создать таблицу Operations", ex);
-                        //return false;
-                        throw;
-                    }
-                }
-                using (DbCommand cmd2 = CreateTextCommand(conn1, CreateOperationDataTableCommandAsText()))
-                {
-                    try
-                    {
-                        Logger.Log.Debug("Создана таблица OperationsData");
-                        cmd2.ExecuteNonQuery();
-                    }
-                    catch (Exception ex)
-                    {
-                        Logger.Log.Error("Не удалось создать таблицу OperationsData", ex);
+                        return false;
                         //return false;
                         throw;
                     }
@@ -157,7 +165,9 @@ PRIMARY KEY CLUSTERED
 
         private string CreateDBCommandAsText()
         {
-            return @"CREATE DATABASE [ZDPress]
+            return @"IF NOT EXISTS(SELECT * FROM sys.databases WHERE name = '[ZDPress]')
+ BEGIN
+CREATE DATABASE [ZDPress]
  CONTAINMENT = NONE
  ON PRIMARY
 (NAME = N'ZDPress', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\DATA\ZDPress.mdf' , SIZE = 94208KB , MAXSIZE = UNLIMITED, FILEGROWTH = 1024KB )
@@ -169,6 +179,7 @@ PRIMARY KEY CLUSTERED
 IF(1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
 begin
 EXEC[ZDPress].[dbo].[sp_fulltext_database] @action = 'enable'
+end
 end";
         }
 
@@ -225,15 +236,14 @@ end";
 
         public async Task<RestoreResult> RestoreBackupJsonOperation(string filePath)
         {
+            Logger.Log.Debug("Восстановление запущено в " + DateTime.Now.ToString());
             RestoreResult restoreResult = new RestoreResult();
             try
             {
                 var jsonFile = File.ReadAllText(filePath);
                 var operationsDes = JsonConvert.DeserializeObject<List<PressOperation>>(jsonFile);
                 DbProviderFactory factory = SqlClientFactory.Instance;
-
-                //using (DbConnection conn = OpenConnectionAsinc(factory, ConnectionString))
-                //{
+                List<PressOperationData> operationDataList = new List<PressOperationData>();
                 DbConnection conn = OpenConnectionAsinc(factory, ConnectionString);
                 using (DbCommand cmd = CreateTextCommand(conn, InsertPressOperationCommandAsTextBackup()))
                 {
@@ -262,33 +272,35 @@ end";
 
                             Int64 id = (Int64?)res ?? pressOperation.Id;
 
-
+                            cmd.Parameters.Clear();
                             if (res != null)
                             {
                                 restoreResult.restoreCount++;
-                                string cmdString = string.Empty;
+                                operationDataList.AddRange(pressOperation.PressOperationData);                 
+                            }
+                        }
 
-                                foreach (var operData in pressOperation.PressOperationData)
-                                {
-                                    cmdString = cmdString + GetInsertPressOperationDataCommandAsTextForRestoreWithIndex(operData.Id.ToString());
-                                }
-                                using (DbCommand cmd1 = CreateTextCommand(conn, cmdString))
-                                {
-                                    foreach (var operData in pressOperation.PressOperationData)
-                                    {
-                                        InsertPressOperationDataPrepare(operData, cmd1, operData.Id.ToString());
-                                    }
-                                    cmd1.ExecuteNonQuery();
-                                    cmd1.Parameters.Clear();
-                                }
+                        var splitList = SplitListCmd<PressOperationData>(operationDataList);
 
-                                //foreach (var operData in pressOperation.PressOperationData)
-                                //    {
-                                //        InsertPressOperationData(operData, conn);
-                                //    }
-                                //}
-                                cmd.Parameters.Clear();
-                            }                            
+
+                        foreach (var split in splitList)
+                        {
+                            string cmdString = beginRestoreStringOperationData;
+                            foreach (var operData in split)
+                            {
+                                cmdString = cmdString + GetInsertPressOperationDataCommandAsTextForRestoreWithIndex(operData.Id.ToString());
+                            }
+                            cmdString = cmdString + endRestoreStringOperationData;
+                            using (DbCommand cmd1 = CreateTextCommand(conn, cmdString))
+                            {
+                                foreach (var operData in split)
+                                {
+                                    InsertPressOperationDataPrepare(operData, cmd1, operData.Id.ToString());
+                                }
+                                await Task.Run(() => cmd1.ExecuteNonQueryAsync());
+                                cmd1.Parameters.Clear();
+                            }
+                            cmdString = String.Empty;
                         }
                     }
                     catch (Exception ex)
@@ -300,6 +312,7 @@ end";
                         throw;
                     }
                 }
+                Logger.Log.Debug("Восстановление завершено в " + DateTime.Now.ToString());
                 restoreResult.result = true;
                 conn.Close();
                 return restoreResult;
@@ -310,6 +323,15 @@ end";
                 return restoreResult;
                 throw;
             }
+        }
+
+        public static List<List<PressOperationData>> SplitListCmd<T>(IList<PressOperationData> source)
+        {
+            return source
+                .Select((x, i) => new { Index = i, Value = x })
+                .GroupBy(x => x.Index / 30)
+                .Select(x => x.Select(v => v.Value).ToList())
+                .ToList();
         }
 
         public void SaveOperations(List<PressOperation> operations, string saveFilePath)
@@ -510,6 +532,8 @@ end";
             return "SET IDENTITY_INSERT [dbo].[PressOperationData] ON; INSERT INTO [dbo].[PressOperationData]([Id], [DispPress], [DlinaSopr], [PressOperationID], [DateInsert]) VALUES(@Id" + index + ", @DispPress" + index + ",  @DlinaSopr" + index + ", @PressOperationID" + index + ", @DateInsert" + index + "); SET IDENTITY_INSERT[dbo].[PressOperationData] OFF;";
         }
 
+        private string beginRestoreStringOperationData = "SET IDENTITY_INSERT [dbo].[PressOperationData] ON;";
+        private string endRestoreStringOperationData = "SET IDENTITY_INSERT [dbo].[PressOperationData] OFF;";
         private string GetInsertPressOperationDataCommandAsText()
         {
             return "INSERT INTO [dbo].[PressOperationData]([DispPress], [DlinaSopr], [PressOperationID]) VALUES(@DispPress,  @DlinaSopr, @PressOperationID);";

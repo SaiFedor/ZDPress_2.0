@@ -161,7 +161,6 @@ namespace ZDPress.UI.Views
             OnOperationsClick();
         }
 
-
         private void OnOperationsClick()
         {
             Form form = UiHelper.GetFormSingle(typeof(OperationListForm));
@@ -301,7 +300,6 @@ namespace ZDPress.UI.Views
                             }
                         }
                     }
-                    
 
                     DateTime startDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month - 1, DateTime.Now.Day);
                     DateTime endDate = DateTime.Now.Date;

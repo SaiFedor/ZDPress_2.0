@@ -156,7 +156,9 @@ namespace ZDPress.UI.Views
         {
             if (!string.IsNullOrEmpty(zdLabel12.Text))
             {
+                zdButton8.Enabled = false;
                 zdButton5.Enabled = false;
+                zdButton3.Enabled = false;
 
                 zdLabel24.Text = @"Подождите! Идёт создание архива!";
 
@@ -166,7 +168,9 @@ namespace ZDPress.UI.Views
                     zdLabel12.Text));
 
                 zdLabel24.Text = string.Empty;
+                zdButton8.Enabled = true;
                 zdButton5.Enabled = true;
+                zdButton3.Enabled = true;  
                 if (result)
                 {
                     MessageBox.Show(@"Создание архива выполнено успешно!");
@@ -187,12 +191,16 @@ namespace ZDPress.UI.Views
             if (!string.IsNullOrEmpty(zdLabel13.Text))
             {
                 zdButton8.Enabled = false;
+                zdButton5.Enabled = false;
+                zdButton3.Enabled = false;
                 zdLabel24.Text = @"Подождите! Идёт восстановление данных!";
 
                 RestoreResult restoreResult = await Task.Run(() => Dal.RestoreBackupJsonOperation(
                    zdLabel13.Text));
 
                 zdButton8.Enabled = true;
+                zdButton5.Enabled = true;
+                zdButton3.Enabled = true;
                 zdLabel24.Text = string.Empty;
 
                 if (restoreResult.result)
@@ -213,6 +221,8 @@ namespace ZDPress.UI.Views
         // Очистака таблиц за выбранный период
         private async void zdButton3_Click(object sender, EventArgs e)
         {
+            zdButton8.Enabled = false;
+            zdButton5.Enabled = false;
             zdButton3.Enabled = false;
             zdLabel24.Text = @"Подождите! Идёт очистка базы данных!";
 
@@ -220,6 +230,8 @@ namespace ZDPress.UI.Views
                    ViewModel.StartCleareDate,
                    ViewModel.EndClearDate));
 
+            zdButton8.Enabled = true;
+            zdButton5.Enabled = true;
             zdButton3.Enabled = true;
             zdLabel24.Text = string.Empty;
 

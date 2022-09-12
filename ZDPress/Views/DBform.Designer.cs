@@ -57,6 +57,7 @@ namespace ZDPress.UI.Views
             this.zdLabel10 = new ZDPress.UI.Controls.ZDLabel();
             this.zdLabel19 = new ZDPress.UI.Controls.ZDLabel();
             this.zdLabel21 = new ZDPress.UI.Controls.ZDLabel();
+            this.zdLabel24 = new ZDPress.UI.Controls.ZDLabel();
             this.zdLabel7 = new ZDPress.UI.Controls.ZDLabel();
             this.zdLabel14 = new ZDPress.UI.Controls.ZDLabel();
             this.zdLabel1 = new ZDPress.UI.Controls.ZDLabel();
@@ -68,14 +69,12 @@ namespace ZDPress.UI.Views
             this.zdLabel11 = new ZDPress.UI.Controls.ZDLabel();
             this.zdButton1 = new ZDPress.UI.Controls.ZDButton();
             this.zdButton2 = new ZDPress.UI.Controls.ZDButton();
-            this.zdLabel24 = new ZDPress.UI.Controls.ZDLabel();
             this.tableLayoutPanelMain.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanelMain
             // 
             this.tableLayoutPanelMain.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.tableLayoutPanelMain.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Inset;
             this.tableLayoutPanelMain.ColumnCount = 7;
             this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 34F));
             this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 263F));
@@ -83,7 +82,7 @@ namespace ZDPress.UI.Views
             this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 250F));
             this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 257F));
             this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 206F));
-            this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 286F));
+            this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 288F));
             this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanelMain.Controls.Add(this.zdLabel8, 1, 1);
             this.tableLayoutPanelMain.Controls.Add(this.zdLabel9, 1, 2);
@@ -132,7 +131,7 @@ namespace ZDPress.UI.Views
             this.zdLabel8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.zdLabel8.AutoSize = true;
             this.zdLabel8.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.zdLabel8.Location = new System.Drawing.Point(42, 86);
+            this.zdLabel8.Location = new System.Drawing.Point(38, 85);
             this.zdLabel8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.zdLabel8.Name = "zdLabel8";
             this.zdLabel8.Size = new System.Drawing.Size(255, 52);
@@ -144,7 +143,7 @@ namespace ZDPress.UI.Views
             this.zdLabel9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.zdLabel9.AutoSize = true;
             this.zdLabel9.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.zdLabel9.Location = new System.Drawing.Point(42, 152);
+            this.zdLabel9.Location = new System.Drawing.Point(38, 151);
             this.zdLabel9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.zdLabel9.Name = "zdLabel9";
             this.zdLabel9.Size = new System.Drawing.Size(255, 52);
@@ -156,7 +155,7 @@ namespace ZDPress.UI.Views
             this.zdLabel15.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.zdLabel15.AutoSize = true;
             this.zdLabel15.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.zdLabel15.Location = new System.Drawing.Point(656, 86);
+            this.zdLabel15.Location = new System.Drawing.Point(648, 85);
             this.zdLabel15.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.zdLabel15.Name = "zdLabel15";
             this.zdLabel15.Size = new System.Drawing.Size(242, 52);
@@ -168,7 +167,7 @@ namespace ZDPress.UI.Views
             this.zdLabel16.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.zdLabel16.AutoSize = true;
             this.zdLabel16.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.zdLabel16.Location = new System.Drawing.Point(656, 152);
+            this.zdLabel16.Location = new System.Drawing.Point(648, 151);
             this.zdLabel16.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.zdLabel16.Name = "zdLabel16";
             this.zdLabel16.Size = new System.Drawing.Size(242, 52);
@@ -177,46 +176,41 @@ namespace ZDPress.UI.Views
             // 
             // dateTimePicker1
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(306, 103);
+            this.dateTimePicker1.Location = new System.Drawing.Point(300, 101);
             this.dateTimePicker1.Margin = new System.Windows.Forms.Padding(3, 25, 3, 2);
-            //this.dateTimePicker1.MaxDate = new System.DateTime(2022, 9, 7, 10, 36, 4, 557).Date;
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(179, 22);
             this.dateTimePicker1.TabIndex = 26;
-            //this.dateTimePicker1.Value = DateTime.Now;
             this.dateTimePicker1.ValueChanged += new System.EventHandler(this.DateTimePicker1_ValueChanged);
             // 
             // dateTimePicker2
             // 
-            this.dateTimePicker2.Location = new System.Drawing.Point(306, 169);
+            this.dateTimePicker2.Location = new System.Drawing.Point(300, 167);
             this.dateTimePicker2.Margin = new System.Windows.Forms.Padding(3, 20, 3, 2);
             this.dateTimePicker2.MaxDate = this.dateTimePicker1.Value;
             this.dateTimePicker2.Name = "dateTimePicker2";
             this.dateTimePicker2.Size = new System.Drawing.Size(179, 22);
             this.dateTimePicker2.TabIndex = 27;
-            //this.dateTimePicker2.Value = new System.DateTime(2022, 9, 5, 0, 0, 0, 0);
+            this.dateTimePicker2.Value = new System.DateTime(2022, 9, 12, 16, 27, 28, 397);
             this.dateTimePicker2.ValueChanged += new System.EventHandler(this.dateTimePicker2_ValueChanged);
             // 
             // dateTimePicker4
             // 
-            this.dateTimePicker4.Location = new System.Drawing.Point(907, 169);
+            this.dateTimePicker4.Location = new System.Drawing.Point(897, 167);
             this.dateTimePicker4.Margin = new System.Windows.Forms.Padding(3, 20, 3, 2);
             this.dateTimePicker4.MaxDate = this.dateTimePicker3.Value;
             this.dateTimePicker4.Name = "dateTimePicker4";
             this.dateTimePicker4.Size = new System.Drawing.Size(167, 22);
             this.dateTimePicker4.TabIndex = 32;
-            //this.dateTimePicker4.Value = new System.DateTime(2022, 9, 5, 0, 0, 0, 0);
             this.dateTimePicker4.ValueChanged += new System.EventHandler(this.dateTimePicker4_ValueChanged_1);
             // 
             // dateTimePicker3
             // 
-            this.dateTimePicker3.Location = new System.Drawing.Point(907, 103);
+            this.dateTimePicker3.Location = new System.Drawing.Point(897, 101);
             this.dateTimePicker3.Margin = new System.Windows.Forms.Padding(3, 25, 3, 2);
-            //this.dateTimePicker3.MaxDate = new System.DateTime(2022, 9, 5, 0, 0, 0, 0);
             this.dateTimePicker3.Name = "dateTimePicker3";
             this.dateTimePicker3.Size = new System.Drawing.Size(167, 22);
             this.dateTimePicker3.TabIndex = 31;
-            //this.dateTimePicker3.Value = new System.DateTime(2022, 9, 5, 0, 0, 0, 0);
             this.dateTimePicker3.ValueChanged += new System.EventHandler(this.dateTimePicker3_ValueChanged_1);
             // 
             // zdButton4
@@ -225,7 +219,7 @@ namespace ZDPress.UI.Views
             this.zdButton4.BackColor = System.Drawing.Color.AliceBlue;
             this.zdButton4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.zdButton4.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.zdButton4.Location = new System.Drawing.Point(42, 6);
+            this.zdButton4.Location = new System.Drawing.Point(38, 5);
             this.zdButton4.Margin = new System.Windows.Forms.Padding(4);
             this.zdButton4.MinimumSize = new System.Drawing.Size(0, 40);
             this.zdButton4.Name = "zdButton4";
@@ -240,7 +234,7 @@ namespace ZDPress.UI.Views
             this.zdLabel18.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.zdLabel18.AutoSize = true;
             this.zdLabel18.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.zdLabel18.Location = new System.Drawing.Point(1167, 86);
+            this.zdLabel18.Location = new System.Drawing.Point(1155, 85);
             this.zdLabel18.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.zdLabel18.Name = "zdLabel18";
             this.zdLabel18.Size = new System.Drawing.Size(198, 52);
@@ -253,10 +247,10 @@ namespace ZDPress.UI.Views
             this.zdLabel22.AutoSize = true;
             this.zdLabel22.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.zdLabel22.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.zdLabel22.Location = new System.Drawing.Point(1375, 101);
+            this.zdLabel22.Location = new System.Drawing.Point(1361, 100);
             this.zdLabel22.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.zdLabel22.Name = "zdLabel22";
-            this.zdLabel22.Size = new System.Drawing.Size(278, 22);
+            this.zdLabel22.Size = new System.Drawing.Size(280, 22);
             this.zdLabel22.TabIndex = 40;
             this.zdLabel22.Text = "Выберите папку:";
             this.zdLabel22.Click += new System.EventHandler(this.zdLabel22_Click);
@@ -265,7 +259,7 @@ namespace ZDPress.UI.Views
             // 
             this.zdLabel27.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.zdLabel27.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.zdLabel27.Location = new System.Drawing.Point(6, 26);
+            this.zdLabel27.Location = new System.Drawing.Point(4, 25);
             this.zdLabel27.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.zdLabel27.Name = "zdLabel27";
             this.zdLabel27.Size = new System.Drawing.Size(26, 26);
@@ -276,7 +270,7 @@ namespace ZDPress.UI.Views
             this.zdLabel25.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.zdLabel25.AutoSize = true;
             this.zdLabel25.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.zdLabel25.Location = new System.Drawing.Point(1167, 152);
+            this.zdLabel25.Location = new System.Drawing.Point(1155, 151);
             this.zdLabel25.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.zdLabel25.Name = "zdLabel25";
             this.zdLabel25.Size = new System.Drawing.Size(198, 52);
@@ -289,10 +283,10 @@ namespace ZDPress.UI.Views
             this.zdLabel26.AutoSize = true;
             this.zdLabel26.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.zdLabel26.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.zdLabel26.Location = new System.Drawing.Point(1375, 167);
+            this.zdLabel26.Location = new System.Drawing.Point(1361, 166);
             this.zdLabel26.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.zdLabel26.Name = "zdLabel26";
-            this.zdLabel26.Size = new System.Drawing.Size(278, 22);
+            this.zdLabel26.Size = new System.Drawing.Size(280, 22);
             this.zdLabel26.TabIndex = 44;
             this.zdLabel26.Text = "Выберите папку:";
             this.zdLabel26.Click += new System.EventHandler(this.zdLabel26_Click);
@@ -302,7 +296,7 @@ namespace ZDPress.UI.Views
             this.zdLabel20.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.zdLabel20.AutoSize = true;
             this.zdLabel20.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.zdLabel20.Location = new System.Drawing.Point(1167, 239);
+            this.zdLabel20.Location = new System.Drawing.Point(1155, 239);
             this.zdLabel20.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.zdLabel20.Name = "zdLabel20";
             this.zdLabel20.Size = new System.Drawing.Size(198, 26);
@@ -315,10 +309,10 @@ namespace ZDPress.UI.Views
             this.zdLabel17.AutoSize = true;
             this.zdLabel17.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.zdLabel17.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.zdLabel17.Location = new System.Drawing.Point(1375, 241);
+            this.zdLabel17.Location = new System.Drawing.Point(1361, 241);
             this.zdLabel17.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.zdLabel17.Name = "zdLabel17";
-            this.zdLabel17.Size = new System.Drawing.Size(278, 22);
+            this.zdLabel17.Size = new System.Drawing.Size(280, 22);
             this.zdLabel17.TabIndex = 35;
             this.zdLabel17.Text = "Имя принтера";
             this.zdLabel17.Click += new System.EventHandler(this.zdLabel17_Click);
@@ -329,7 +323,7 @@ namespace ZDPress.UI.Views
             this.zdButton5.BackColor = System.Drawing.Color.AliceBlue;
             this.zdButton5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.zdButton5.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.zdButton5.Location = new System.Drawing.Point(42, 217);
+            this.zdButton5.Location = new System.Drawing.Point(38, 217);
             this.zdButton5.Margin = new System.Windows.Forms.Padding(4);
             this.zdButton5.MinimumSize = new System.Drawing.Size(0, 20);
             this.zdButton5.Name = "zdButton5";
@@ -345,7 +339,7 @@ namespace ZDPress.UI.Views
             this.zdLabel12.AutoSize = true;
             this.zdLabel12.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.zdLabel12.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.zdLabel12.Location = new System.Drawing.Point(307, 241);
+            this.zdLabel12.Location = new System.Drawing.Point(301, 241);
             this.zdLabel12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.zdLabel12.Name = "zdLabel12";
             this.zdLabel12.Size = new System.Drawing.Size(339, 22);
@@ -358,7 +352,7 @@ namespace ZDPress.UI.Views
             this.zdLabel23.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.zdLabel23.AutoSize = true;
             this.zdLabel23.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.zdLabel23.Location = new System.Drawing.Point(38, 311);
+            this.zdLabel23.Location = new System.Drawing.Point(34, 311);
             this.zdLabel23.Margin = new System.Windows.Forms.Padding(0, 0, 4, 0);
             this.zdLabel23.Name = "zdLabel23";
             this.zdLabel23.Size = new System.Drawing.Size(259, 52);
@@ -402,7 +396,7 @@ namespace ZDPress.UI.Views
             "29",
             "30",
             "31"});
-            this.comboBox1.Location = new System.Drawing.Point(306, 325);
+            this.comboBox1.Location = new System.Drawing.Point(300, 325);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(80, 24);
             this.comboBox1.TabIndex = 46;
@@ -414,7 +408,7 @@ namespace ZDPress.UI.Views
             this.zdButton3.BackColor = System.Drawing.Color.AliceBlue;
             this.zdButton3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.zdButton3.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.zdButton3.Location = new System.Drawing.Point(656, 217);
+            this.zdButton3.Location = new System.Drawing.Point(648, 217);
             this.zdButton3.Margin = new System.Windows.Forms.Padding(4);
             this.zdButton3.MinimumSize = new System.Drawing.Size(0, 20);
             this.zdButton3.Name = "zdButton3";
@@ -430,7 +424,7 @@ namespace ZDPress.UI.Views
             this.zdButton8.BackColor = System.Drawing.Color.AliceBlue;
             this.zdButton8.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.zdButton8.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.zdButton8.Location = new System.Drawing.Point(656, 302);
+            this.zdButton8.Location = new System.Drawing.Point(648, 302);
             this.zdButton8.Margin = new System.Windows.Forms.Padding(4);
             this.zdButton8.MinimumSize = new System.Drawing.Size(0, 20);
             this.zdButton8.Name = "zdButton8";
@@ -446,7 +440,7 @@ namespace ZDPress.UI.Views
             this.zdLabel13.AutoSize = true;
             this.zdLabel13.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.zdLabel13.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.zdLabel13.Location = new System.Drawing.Point(908, 326);
+            this.zdLabel13.Location = new System.Drawing.Point(898, 326);
             this.zdLabel13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.zdLabel13.Name = "zdLabel13";
             this.zdLabel13.Size = new System.Drawing.Size(249, 22);
@@ -460,7 +454,7 @@ namespace ZDPress.UI.Views
             this.zdLabel10.AutoSize = true;
             this.zdLabel10.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.zdLabel10.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.zdLabel10.Location = new System.Drawing.Point(42, 394);
+            this.zdLabel10.Location = new System.Drawing.Point(38, 395);
             this.zdLabel10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.zdLabel10.Name = "zdLabel10";
             this.zdLabel10.Size = new System.Drawing.Size(255, 22);
@@ -473,7 +467,7 @@ namespace ZDPress.UI.Views
             this.zdLabel19.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.zdLabel19.AutoSize = true;
             this.zdLabel19.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.zdLabel19.Location = new System.Drawing.Point(1167, 311);
+            this.zdLabel19.Location = new System.Drawing.Point(1155, 311);
             this.zdLabel19.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.zdLabel19.Name = "zdLabel19";
             this.zdLabel19.Size = new System.Drawing.Size(198, 52);
@@ -486,13 +480,24 @@ namespace ZDPress.UI.Views
             this.zdLabel21.AutoSize = true;
             this.zdLabel21.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.zdLabel21.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.zdLabel21.Location = new System.Drawing.Point(1375, 326);
+            this.zdLabel21.Location = new System.Drawing.Point(1361, 326);
             this.zdLabel21.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.zdLabel21.Name = "zdLabel21";
-            this.zdLabel21.Size = new System.Drawing.Size(278, 22);
+            this.zdLabel21.Size = new System.Drawing.Size(280, 22);
             this.zdLabel21.TabIndex = 50;
             this.zdLabel21.Text = "Выберите папку:";
             this.zdLabel21.Click += new System.EventHandler(this.SelectLogFilePath);
+            // 
+            // zdLabel24
+            // 
+            this.zdLabel24.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.zdLabel24.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.zdLabel24.ForeColor = System.Drawing.Color.Red;
+            this.zdLabel24.Location = new System.Drawing.Point(301, 1);
+            this.zdLabel24.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.zdLabel24.Name = "zdLabel24";
+            this.zdLabel24.Size = new System.Drawing.Size(339, 73);
+            this.zdLabel24.TabIndex = 51;
             // 
             // zdLabel7
             // 
@@ -607,17 +612,6 @@ namespace ZDPress.UI.Views
             this.zdButton2.Size = new System.Drawing.Size(75, 69);
             this.zdButton2.TabIndex = 0;
             this.zdButton2.UseVisualStyleBackColor = false;
-            // 
-            // zdLabel24
-            // 
-            this.zdLabel24.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.zdLabel24.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.zdLabel24.ForeColor = System.Drawing.Color.Red;
-            this.zdLabel24.Location = new System.Drawing.Point(307, 2);
-            this.zdLabel24.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.zdLabel24.Name = "zdLabel24";
-            this.zdLabel24.Size = new System.Drawing.Size(339, 73);
-            this.zdLabel24.TabIndex = 51;
             // 
             // DBform
             // 
